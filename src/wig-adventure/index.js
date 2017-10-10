@@ -24,6 +24,23 @@ player.innerHTML = svgMaster.player;
 // `;
 
 
+// var s1C1 = () => {
+// 	var tl = new TimelineMax()
+// 	tl.to(player, 1, { x: 300 })
+// 	// return tl;
+// }
+
+// build Scene One, Chapter One
+var s1C1 = new TimelineMax()
+s1C1.to(player, 1, { x: 400 })
+s1C1.to(environment, 1, { x: -400 }, "-=1")
+
+var scene1 = new ScrollMagic.Scene({ duration: 400, offset: 0 })
+  .setTween(s1C1) // trigger a TweenMax.to tween
+  .addIndicators({name: "1 (duration: 0)"}) // add indicators (requires plugin)
+  .setPin("#scene") // pins the element for the the scene's duration
+  .addTo(controller)
+
 // 
 // ANIMATION FUNCTIONS
 // 
