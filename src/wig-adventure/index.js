@@ -13,6 +13,9 @@ var controller = new ScrollMagic.Controller();
 // dom elements
 var player = document.getElementById('player');
 var environment = document.querySelector('.environment');
+var rowOneLandscape_S1 = document.querySelector('.rowOneLandscape.s1');
+var rowTwoLandscape_S1 = document.querySelector('.rowTwoLandscape.s1');
+var rowThreeLandscape_S1 = document.querySelector('.rowThreeLandscape.s1');
 
 // render
 // 
@@ -24,16 +27,18 @@ player.innerHTML = svgMaster.player;
 // `;
 
 
-// var s1C1 = () => {
-// 	var tl = new TimelineMax()
-// 	tl.to(player, 1, { x: 300 })
-// 	// return tl;
-// }
+var playerOntoScreen = () => {
+	var tl = new TimelineMax()
+	tl.to(player, 1, { x: 200 })
+	return tl;
+}
+playerOntoScreen();
 
 // build Scene One, Chapter One
 var s1C1 = new TimelineMax()
-s1C1.to(player, 1, { x: 400 })
-s1C1.to(environment, 1, { x: -400 }, "-=1")
+s1C1.to(rowOneLandscape_S1, 1, { x: -200 })
+s1C1.to(rowTwoLandscape_S1, 1, { x: -100 }, "-=1")
+s1C1.to(rowThreeLandscape_S1, 1, { x: -40 }, "-=1")
 
 var scene1 = new ScrollMagic.Scene({ duration: 400, offset: 0 })
   .setTween(s1C1) // trigger a TweenMax.to tween
