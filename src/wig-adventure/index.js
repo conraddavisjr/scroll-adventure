@@ -12,8 +12,16 @@ var controller = new ScrollMagic.Controller();
 
 // dom elements
 var player = document.getElementById('player');
+var environment = document.querySelector('.environment');
 
+// render
+// 
+// render the player to the scene
 player.innerHTML = svgMaster.player;
+// environment.innerHTML += `
+// 	<div class="rowOneLandscape"> ${svgMaster.rowOneLandscape} </div>
+// 	<div class="rowTwoEnvironment"> ${svgMaster.rowTwoLandscape} </div>
+// `;
 
 
 // 
