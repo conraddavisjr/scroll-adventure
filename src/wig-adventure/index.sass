@@ -4,11 +4,16 @@ body
 
 #scene
   position: relative
+  height: 100vh
+
+#camera
+  display: initial
 
 #player
   position: absolute
-  width: 38px
-  top: 200px
+  width: 62px
+  bottom: 0
+  z-index: 4
 
 .overlay
   position: fixed
@@ -20,34 +25,41 @@ body
   min-width: 1280px
   position: relative
   height: 100%
+  &.s1
+    background-color: #DDF3FD
 
 // Scene One
 
 .rowOneLandscape
-  height: 54px
-  background-size: contain
-  position: relative
+  height: 252px
+  // background-size: cover
+  position: absolute
   background-position: left
   background-repeat: no-repeat
-  top: 210px
+  bottom: 0
   z-index: 3
   &.s1
     background-image: url('./svg-assets/items/rowOneLandscape.svg')
+    width: 2350px
 
 .rowTwoLandscape
-  position: relative
+  position: absolute
   height: 210px
-  top: 210px
+  bottom: 0
+  background-size: cover
   background-repeat-y: no-repeat
   z-index: 2
   &.s1
     background-image: url('./svg-assets/items/rowTwoLandscape.svg')
+    width: 1802px
 
 .rowThreeLandscape
+  position: absolute
   height: 422px
   z-index: 1
-  position: absolute
+  background-size: cover
   background-repeat-y: no-repeat
+  bottom: 0
   width: 100%
   &.s1
     background-image: url('./svg-assets/items/rowThreeLandscape.svg')
