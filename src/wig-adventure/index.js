@@ -26,18 +26,12 @@ var rowOneLandscape_S1 = document.querySelector('.rowOneLandscape.s1');
 var rowTwoLandscape_S1 = document.querySelector('.rowTwoLandscape.s1');
 var rowThreeLandscape_S1 = document.querySelector('.rowThreeLandscape.s1');
 
-
-
 var hoppingPlayer = new TimelineMax()
 hoppingPlayer.to(playerBody, 0.5, { y: -30, repeat:-1, yoyo:true, ease: Power1.easeOut })
-
-// playerOntoScreen();
 
 //  set the default position for the player
 var playerDefaultPosition = new TimelineMax()
 playerDefaultPosition.set(player, { x: 100 })
-
-
 
 // build Scene One, Chapter One
 var s1C1 = new TimelineMax()
@@ -57,10 +51,10 @@ var s1C2 = new TimelineMax()
 		bezier: {
       type: "soft",
       values: [
-	      { x: '+=120', y: '-=330' }, 
-	      { x: '+=140', y: '-=200' }
+	      { x: '+=120', y: '-=350' }, 
+	      { x: '+=140', y: '-=170' }
 	    ] 
-    }
+    },
   })
   // movePlayer(s1C2, 'right', 100, 1)
 	// s1C2.to(playerShadow, 0.5, { opacity: 0, x: '+=20', y: '+=370' }, "-=0.5")
@@ -73,26 +67,27 @@ var s1C2 = new TimelineMax()
       values: [
 	      { x: '+=20', y: '-=30' }, 
 	      { x: '+=140', y: '-=150' },
-	      { x: '+=200', y: '+=195' }
+	      { x: '+=200', y: '+=175' }
 	    ] 
-    }
+    },
+    ease: Power3.easeInOut
   })
 
 	// s1C2.set(playerShadow, { opacity: 0, x: '-=15', y: '-=250' }, "-=1")
 	// s1C2.to(playerShadow, 0.5, { opacity: 0.5, x: '-=5', y: '-=120' }, "-=0.5")
 	// landing bounce
-	s1C2.to(player, 0.3, 
-	{ 
-		bezier: {
-      type: "soft",
-      values: [
-	      { x: '+=0', y: '-=15' }, 
-	      { x: '+=10', y: '-=5' },
-	      { x: '+=20', y: '+=0' }
-	    ] 
-    },
-    // onComplete: toggleScroll
-  })
+	// s1C2.to(player, 0.3, 
+	// { 
+	// 	bezier: {
+ //      type: "soft",
+ //      values: [
+	//       { x: '+=0', y: '-=15' }, 
+	//       { x: '+=10', y: '-=5' },
+	//       { x: '+=20', y: '+=0' }
+	//     ] 
+ //    },
+ //    // onComplete: toggleScroll
+ //  })
   // Disable the scroll until this animation is complete
 	// s1C2.call(() => toggleScroll())
 
