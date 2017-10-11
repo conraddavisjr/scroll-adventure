@@ -10,7 +10,11 @@ import svgMaster from './svg-assets';
 // init ScrollMagic controller
 var controller = new ScrollMagic.Controller();
 
+// state vars
+var scrollDirection = '';
+
 // dom elements
+var bodyTag = document.querySelector('body')
 var player = document.getElementById('player');
 // render the player to the scene
 player.innerHTML = svgMaster.player;
@@ -44,8 +48,13 @@ var s1C1 = new TimelineMax()
 s1C1.to(rowOneLandscape_S1, 1.5, { x: -400 })
 s1C1.to(rowTwoLandscape_S1, 1.5, { x: -100 }, "-=1.5")
 s1C1.to(rowThreeLandscape_S1, 1.5, { x: -40 }, "-=1.5")
+
+
 // charater double jump forward
-	s1C1.to(player, 0.5, 
+var s1C2 = new TimelineMax()
+// Disable the scroll until this animation is complete
+s1C2.call(() => toggleScroll())
+	s1C2.to(player, 0.5, 
 	{ 
 		bezier: {
       type: "soft",
@@ -55,9 +64,9 @@ s1C1.to(rowThreeLandscape_S1, 1.5, { x: -40 }, "-=1.5")
 	    ] 
     }
   })
-	s1C1.to(playerShadow, 0.5, { opacity: 0, x: '+=20', y: '+=370' }, "-=0.5")
+	s1C2.to(playerShadow, 0.5, { opacity: 0, x: '+=20', y: '+=370' }, "-=0.5")
 	// second jump
-	s1C1.to(player, 1, 
+	s1C2.to(player, 1, 
 	{ 
 		bezier: {
       type: "soft",
@@ -69,14 +78,14 @@ s1C1.to(rowThreeLandscape_S1, 1.5, { x: -40 }, "-=1.5")
     }
   })
   // move environment
-  s1C1.to(rowOneLandscape_S1, 1, { x: '-=100' }, "-=1")
-	s1C1.to(rowTwoLandscape_S1, 1, { x: '-=30' }, "-=1")
-	s1C1.to(rowThreeLandscape_S1, 1, { x: '-=10' }, "-=1")
+  s1C2.to(rowOneLandscape_S1, 1, { x: '-=100' }, "-=1")
+	s1C2.to(rowTwoLandscape_S1, 1, { x: '-=30' }, "-=1")
+	s1C2.to(rowThreeLandscape_S1, 1, { x: '-=10' }, "-=1")
 
-	s1C1.set(playerShadow, { opacity: 0, x: '-=15', y: '-=250' }, "-=1")
-	s1C1.to(playerShadow, 0.5, { opacity: 0.5, x: '-=5', y: '-=120' }, "-=0.5")
+	s1C2.set(playerShadow, { opacity: 0, x: '-=15', y: '-=250' }, "-=1")
+	s1C2.to(playerShadow, 0.5, { opacity: 0.5, x: '-=5', y: '-=120' }, "-=0.5")
 	// landing bounce
-	s1C1.to(player, 0.3, 
+	s1C2.to(player, 0.3, 
 	{ 
 		bezier: {
       type: "soft",
@@ -87,25 +96,53 @@ s1C1.to(rowThreeLandscape_S1, 1.5, { x: -40 }, "-=1.5")
 	    ] 
     }
   })
+  // Disable the scroll until this animation is complete
+	s1C2.call(() => toggleScroll())
 
+
+	// Scene One, Chapter Two
+var s1C3 = new TimelineMax()
   // player walking, environment moving
-	s1C1.to(player, 2, { x: '+=320'})
-	s1C1.to(rowOneLandscape_S1, 2, { x: '-=400' }, "-=2")
-	s1C1.to(rowTwoLandscape_S1, 2, { x: '-=100' }, "-=2")
-	s1C1.to(rowThreeLandscape_S1, 2, { x: '-=40' }, "-=2")
+	s1C3.to(player, 2, { x: '+=320'})
+	s1C3.to(rowOneLandscape_S1, 2, { x: '-=400' }, "-=2")
+	s1C3.to(rowTwoLandscape_S1, 2, { x: '-=100' }, "-=2")
+	s1C3.to(rowThreeLandscape_S1, 2, { x: '-=40' }, "-=2")
 
 // s1C1.to(playerShadow, 0.2, { opacity: 1, x: '+=5', y: '-=10' }, "-=0.9")
 // s1C1.to(playerShadow, 0.3, { opacity: 0.5, x: '-=40', y: '-=360' }, "-=0.5")
 
-var scene1 = new ScrollMagic.Scene({ offset: 0 })
+var scene1_1 = new ScrollMagic.Scene({ duration: 500, offset: 0 })
   .setTween(s1C1) // trigger a TweenMax.to tween
   .addIndicators({name: "1 (duration: 0)"}) // add indicators (requires plugin)
   .setPin("#scene") // pins the element for the the scene's duration
+  .addTo(controller)
+  .on("update", function() {
+    console.log('scrollDirection: ', controller.info("scrollDirection"))
+    scrollDirection = controller.info("scrollDirection")
+	});
+
+ var scene1_2 = new ScrollMagic.Scene({ offset: 500 })
+  .setTween(s1C2) // trigger a TweenMax.to tween
+  .addIndicators({name: "1 (duration: 0)"}) // add indicators (requires plugin)
+  .setPin("#scene") // pins the element for the the scene's duration
+  .addTo(controller)
+
+
+ var scene1_3 = new ScrollMagic.Scene({ duration: 1000, offset: 650 })
+  .setTween(s1C3) // trigger a TweenMax.to tween
+  .addIndicators({name: "1 (duration: 0)"}) // add indicators (requires plugin)
+  // .setPin("#scene") // pins the element for the the scene's duration
   .addTo(controller)
 
 // 
 // ANIMATION FUNCTIONS
 // 
+
+// toggle scrolling on the body
+function toggleScroll() {
+	scrollDirection == 'REVERSE' ? bodyTag.classList.remove('disabledScroll') : bodyTag.classList.toggle('disabledScroll');
+}
+
 
 // function doubleJumpForward() {
 // 	// charater double jump forward
