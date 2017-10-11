@@ -45,9 +45,18 @@ playerDefaultPosition.set(player, { x: 100 })
 
 // build Scene One, Chapter One
 var s1C1 = new TimelineMax()
-s1C1.to(rowOneLandscape_S1, 1.5, { x: -400 })
-s1C1.to(rowTwoLandscape_S1, 1.5, { x: -100 }, "-=1.5")
-s1C1.to(rowThreeLandscape_S1, 1.5, { x: -40 }, "-=1.5")
+movePlayer(s1C1, 'right', 400, 1.5)
+// s1C1.to(rowOneLandscape_S1, 1.5, { x: -400 })
+// s1C1.to(rowTwoLandscape_S1, 1.5, { x: -100 }, "-=1.5")
+// s1C1.to(rowThreeLandscape_S1, 1.5, { x: -40 }, "-=1.5")
+
+// 
+// function movePlayer(tween, direction, distance, duration = 0) {
+// 	let dir = direction == 'left' ? '+=' : '-=';
+// 	tween.to(rowOneLandscape_S1, 1, { x: `${dir}${distance}` }, duration)
+// 	tween.to(rowTwoLandscape_S1, 1, { x: `${dir}${distance / 2}` }, duration)
+// 	tween.to(rowThreeLandscape_S1, 1, { x: `${dir}${distance / 4}` }, duration)
+// }
 
 
 // charater double jump forward
@@ -65,6 +74,8 @@ s1C2.call(() => toggleScroll())
     }
   })
 	s1C2.to(playerShadow, 0.5, { opacity: 0, x: '+=20', y: '+=370' }, "-=0.5")
+  // move environment
+  movePlayer(s1C2, 'right', 100, 1)
 	// second jump
 	s1C2.to(player, 1, 
 	{ 
@@ -76,11 +87,10 @@ s1C2.call(() => toggleScroll())
 	      { x: '+=200', y: '+=195' }
 	    ] 
     }
-  })
-  // move environment
-  s1C2.to(rowOneLandscape_S1, 1, { x: '-=100' }, "-=1")
-	s1C2.to(rowTwoLandscape_S1, 1, { x: '-=30' }, "-=1")
-	s1C2.to(rowThreeLandscape_S1, 1, { x: '-=10' }, "-=1")
+  }, "-=1")
+ //  s1C2.to(rowOneLandscape_S1, 1, { x: '-=100' }, "-=1")
+	// s1C2.to(rowTwoLandscape_S1, 1, { x: '-=30' }, "-=1")
+	// s1C2.to(rowThreeLandscape_S1, 1, { x: '-=10' }, "-=1")
 
 	s1C2.set(playerShadow, { opacity: 0, x: '-=15', y: '-=250' }, "-=1")
 	s1C2.to(playerShadow, 0.5, { opacity: 0.5, x: '-=5', y: '-=120' }, "-=0.5")
@@ -102,11 +112,9 @@ s1C2.call(() => toggleScroll())
 
 	// Scene One, Chapter Two
 var s1C3 = new TimelineMax()
-  // player walking, environment moving
-	s1C3.to(player, 2, { x: '+=320'})
-	s1C3.to(rowOneLandscape_S1, 2, { x: '-=400' }, "-=2")
-	s1C3.to(rowTwoLandscape_S1, 2, { x: '-=100' }, "-=2")
-	s1C3.to(rowThreeLandscape_S1, 2, { x: '-=40' }, "-=2")
+// player walking, environment moving
+movePlayer(s1C3, 'right', 400, 2)
+s1C3.to(player, 2, { x: '+=320'}, "-=2")
 
 // s1C1.to(playerShadow, 0.2, { opacity: 1, x: '+=5', y: '-=10' }, "-=0.9")
 // s1C1.to(playerShadow, 0.3, { opacity: 0.5, x: '-=40', y: '-=360' }, "-=0.5")
@@ -117,7 +125,7 @@ var scene1_1 = new ScrollMagic.Scene({ duration: 500, offset: 0 })
   .setPin("#scene") // pins the element for the the scene's duration
   .addTo(controller)
   .on("update", function() {
-    console.log('scrollDirection: ', controller.info("scrollDirection"))
+  	// keep track of the scrolling direction
     scrollDirection = controller.info("scrollDirection")
 	});
 
@@ -141,6 +149,14 @@ var scene1_1 = new ScrollMagic.Scene({ duration: 500, offset: 0 })
 // toggle scrolling on the body
 function toggleScroll() {
 	scrollDirection == 'REVERSE' ? bodyTag.classList.remove('disabledScroll') : bodyTag.classList.toggle('disabledScroll');
+}
+
+// function for handling the environment movement when the player walks
+function movePlayer(tween, direction, distance, timing) {
+	let dir = direction == 'left' ? '+=' : '-=';
+	tween.to(rowOneLandscape_S1, timing, { x: `${dir}${distance}` }), `-=${timing}`
+	tween.to(rowTwoLandscape_S1, timing, { x: `${dir}${distance / 2}` }, `-=${timing}`)
+	tween.to(rowThreeLandscape_S1, timing, { x: `${dir}${distance / 4}` }, `-=${timing}`)
 }
 
 
