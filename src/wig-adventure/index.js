@@ -27,7 +27,7 @@ var rowTwoLandscape_S1 = document.querySelector('.rowTwoLandscape.s1');
 var rowThreeLandscape_S1 = document.querySelector('.rowThreeLandscape.s1');
 
 var hoppingPlayer = new TimelineMax()
-hoppingPlayer.to(playerBody, 0.5, { y: -30, repeat:-1, yoyo:true, ease: Power1.easeOut })
+hoppingPlayer.to(playerBody, 0.3, { y: -30, repeat:-1, yoyo:true, ease: Power1.easeOut })
 
 //  set the default position for the player
 var playerDefaultPosition = new TimelineMax()
@@ -51,10 +51,10 @@ var s1C2 = new TimelineMax()
 		bezier: {
       type: "soft",
       values: [
-	      { x: '+=120', y: '-=350' }, 
-	      { x: '+=140', y: '-=170' }
+	      { x: '+=120', y: '-=340' }, 
+	      { x: '+=140', y: '-=190' }
 	    ] 
-    },
+    }
   })
   // movePlayer(s1C2, 'right', 100, 1)
 	// s1C2.to(playerShadow, 0.5, { opacity: 0, x: '+=20', y: '+=370' }, "-=0.5")
