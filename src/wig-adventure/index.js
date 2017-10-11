@@ -15,33 +15,29 @@ var scrollDirection = '';
 
 // dom elements
 var bodyTag = document.querySelector('body')
+var playerBody = document.getElementById('player-body');
 var player = document.getElementById('player');
 // render the player to the scene
 player.innerHTML = svgMaster.player;
 
-var playerShadow = document.querySelector('.player-shadow');
+// var playerShadow = document.querySelector('.player-shadow');
 var environment = document.querySelector('.environment');
 var rowOneLandscape_S1 = document.querySelector('.rowOneLandscape.s1');
 var rowTwoLandscape_S1 = document.querySelector('.rowTwoLandscape.s1');
 var rowThreeLandscape_S1 = document.querySelector('.rowThreeLandscape.s1');
 
-// render
-// 
-// environment.innerHTML += `
-// 	<div class="rowOneLandscape"> ${svgMaster.rowOneLandscape} </div>
-// 	<div class="rowTwoEnvironment"> ${svgMaster.rowTwoLandscape} </div>
-// `;
 
 
-// var playerOntoScreen = () => {
-// 	var tl = new TimelineMax()
-// 	tl.to(player, 1, { x: 200 })
-// 	return tl;
-// }
+var hoppingPlayer = new TimelineMax()
+hoppingPlayer.to(playerBody, 0.5, { y: -30, repeat:-1, yoyo:true, ease: Power1.easeOut })
+
 // playerOntoScreen();
+
 //  set the default position for the player
 var playerDefaultPosition = new TimelineMax()
 playerDefaultPosition.set(player, { x: 100 })
+
+
 
 // build Scene One, Chapter One
 var s1C1 = new TimelineMax()
@@ -67,7 +63,7 @@ var s1C2 = new TimelineMax()
     }
   })
   // movePlayer(s1C2, 'right', 100, 1)
-	s1C2.to(playerShadow, 0.5, { opacity: 0, x: '+=20', y: '+=370' }, "-=0.5")
+	// s1C2.to(playerShadow, 0.5, { opacity: 0, x: '+=20', y: '+=370' }, "-=0.5")
   // move environment
 	// second jump
 	s1C2.to(player, 1, 
@@ -82,8 +78,8 @@ var s1C2 = new TimelineMax()
     }
   })
 
-	s1C2.set(playerShadow, { opacity: 0, x: '-=15', y: '-=250' }, "-=1")
-	s1C2.to(playerShadow, 0.5, { opacity: 0.5, x: '-=5', y: '-=120' }, "-=0.5")
+	// s1C2.set(playerShadow, { opacity: 0, x: '-=15', y: '-=250' }, "-=1")
+	// s1C2.to(playerShadow, 0.5, { opacity: 0.5, x: '-=5', y: '-=120' }, "-=0.5")
 	// landing bounce
 	s1C2.to(player, 0.3, 
 	{ 
@@ -107,9 +103,6 @@ var s1C3 = new TimelineMax()
 movePlayer(s1C3, 'right', 400, 2)
 s1C3.to(player, 2, { x: '+=320'}, "-=2")
 
-// s1C1.to(playerShadow, 0.2, { opacity: 1, x: '+=5', y: '-=10' }, "-=0.9")
-// s1C1.to(playerShadow, 0.3, { opacity: 0.5, x: '-=40', y: '-=360' }, "-=0.5")
-
 
 var scene1_1 = new ScrollMagic.Scene({ duration: 500, offset: 0 })
   .setTween(s1C1) // trigger a TweenMax.to tween
@@ -121,41 +114,13 @@ var scene1_1 = new ScrollMagic.Scene({ duration: 500, offset: 0 })
   .setTween(s1C2) // trigger a TweenMax.to tween
   .addIndicators({name: "1 (duration: 0)"}) // add indicators (requires plugin)
   .setPin("#scene") // pins the element for the the scene's duration
-  .on('start', () => {
-  	console.log('scene Start')
-  	toggleScroll(2000)
-  })
-
- //  .on("update", function() {
- //  	// keep track of the scrolling direction
- //    scrollDirection = controller.info("scrollDirection")
- //    console.log('controller.info("scrollDirection"): ', controller.info("scrollDirection"))
- //    console.log('controller.info("scrollPos"): ', controller.info("scrollPos"))
- //    console.log('controller.info("size"): ', controller.info("size"))
-	// });
- //  .on("update", function(event) {
- //  	console.log('event: ', event)
-
- //  	// keep track of the scrolling direction
- //    let progress = controller.info("scrollDirection")
- //    console.log('controller.info("progress"): ', controller.info("scrollDirection"))
-	// // })
- //  .on('progress', (event) => {
- //  	console.log('event.progress: ', event.state)
- //  	console.log('event.progress: ', event.progress)
-	// }) 
-  // .setClassToggle("body", "disabledScroll")
+  .on('start', () => toggleScroll(2000))
   .addTo(controller)
-
 
  var scene1_3 = new ScrollMagic.Scene({ duration: 1000, offset: 550 })
   .setTween(s1C3) // trigger a TweenMax.to tween
   .addIndicators({name: "1 (duration: 0)"}) // add indicators (requires plugin)
   // .setPin("#scene") // pins the element for the the scene's duration
-  .on('start', () => console.log('scene Start'))
-  .on('end', () => console.log('scene END'))
-  .on('enter', () => console.log('scene Enter'))
-  .on('leave', () => console.log('scene Left'))
   .addTo(controller)
 
 // 
@@ -168,7 +133,6 @@ function toggleScroll(delay) {
 	setTimeout(() => {
 		bodyTag.classList.remove('disabledScroll')
 	}, delay)
-	// scrollDirection == 'REVERSE' ? bodyTag.classList.remove('disabledScroll') : bodyTag.classList.toggle('disabledScroll');
 }
 
 // function for handling the environment movement when the player walks
