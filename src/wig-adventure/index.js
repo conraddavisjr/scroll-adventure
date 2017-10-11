@@ -29,11 +29,11 @@ var rowThreeLandscape_S1 = document.querySelector('.rowThreeLandscape.s1');
 // `;
 
 
-var playerOntoScreen = () => {
-	var tl = new TimelineMax()
-	tl.to(player, 1, { x: 200 })
-	return tl;
-}
+// var playerOntoScreen = () => {
+// 	var tl = new TimelineMax()
+// 	tl.to(player, 1, { x: 200 })
+// 	return tl;
+// }
 // playerOntoScreen();
 //  set the default position for the player
 var playerDefaultPosition = new TimelineMax()
@@ -44,10 +44,9 @@ var s1C1 = new TimelineMax()
 s1C1.to(rowOneLandscape_S1, 1.5, { x: -400 })
 s1C1.to(rowTwoLandscape_S1, 1.5, { x: -100 }, "-=1.5")
 s1C1.to(rowThreeLandscape_S1, 1.5, { x: -40 }, "-=1.5")
-// s1C1.to(player, 1, { y: -200, x: '+=30' })
-s1C1.to(player, 0.5, 
+// charater double jump forward
+	s1C1.to(player, 0.5, 
 	{ 
-		// x: '+=100', 
 		bezier: {
       type: "soft",
       values: [
@@ -56,9 +55,49 @@ s1C1.to(player, 0.5,
 	    ] 
     }
   })
-s1C1.to(playerShadow, 0.5, { opacity: 0, x: '+=20', y: '+=145' }, "-=1")
+	s1C1.to(playerShadow, 0.5, { opacity: 0, x: '+=20', y: '+=370' }, "-=0.5")
+	// second jump
+	s1C1.to(player, 1, 
+	{ 
+		bezier: {
+      type: "soft",
+      values: [
+	      { x: '+=20', y: '-=30' }, 
+	      { x: '+=140', y: '-=150' },
+	      { x: '+=200', y: '+=195' }
+	    ] 
+    }
+  })
+  // move environment
+  s1C1.to(rowOneLandscape_S1, 1, { x: '-=100' }, "-=1")
+	s1C1.to(rowTwoLandscape_S1, 1, { x: '-=30' }, "-=1")
+	s1C1.to(rowThreeLandscape_S1, 1, { x: '-=10' }, "-=1")
 
-var scene1 = new ScrollMagic.Scene({ duration: 500, offset: 0 })
+	s1C1.set(playerShadow, { opacity: 0, x: '-=15', y: '-=250' }, "-=1")
+	s1C1.to(playerShadow, 0.5, { opacity: 0.5, x: '-=5', y: '-=120' }, "-=0.5")
+	// landing bounce
+	s1C1.to(player, 0.3, 
+	{ 
+		bezier: {
+      type: "soft",
+      values: [
+	      { x: '+=0', y: '-=15' }, 
+	      { x: '+=10', y: '-=5' },
+	      { x: '+=20', y: '+=0' }
+	    ] 
+    }
+  })
+
+  // player walking, environment moving
+	s1C1.to(player, 2, { x: '+=320'})
+	s1C1.to(rowOneLandscape_S1, 2, { x: '-=400' }, "-=2")
+	s1C1.to(rowTwoLandscape_S1, 2, { x: '-=100' }, "-=2")
+	s1C1.to(rowThreeLandscape_S1, 2, { x: '-=40' }, "-=2")
+
+// s1C1.to(playerShadow, 0.2, { opacity: 1, x: '+=5', y: '-=10' }, "-=0.9")
+// s1C1.to(playerShadow, 0.3, { opacity: 0.5, x: '-=40', y: '-=360' }, "-=0.5")
+
+var scene1 = new ScrollMagic.Scene({ offset: 0 })
   .setTween(s1C1) // trigger a TweenMax.to tween
   .addIndicators({name: "1 (duration: 0)"}) // add indicators (requires plugin)
   .setPin("#scene") // pins the element for the the scene's duration
@@ -67,6 +106,38 @@ var scene1 = new ScrollMagic.Scene({ duration: 500, offset: 0 })
 // 
 // ANIMATION FUNCTIONS
 // 
+
+// function doubleJumpForward() {
+// 	// charater double jump forward
+// 	var tl = new TimelineMax()
+// 	tl.to(player, 0.5, 
+// 		{ 
+// 			bezier: {
+// 	      type: "soft",
+// 	      values: [
+// 		      { x: '+=120', y: '-=330' }, 
+// 		      { x: '+=140', y: '-=200' }
+// 		    ] 
+// 	    }
+// 	  })
+// 	tl.to(playerShadow, 0.5, { opacity: 0, x: '+=20', y: '+=370' }, "-=0.5")
+// 	// charater jump
+// 	tl.to(player, 1, 
+// 		{ 
+// 			bezier: {
+// 	      type: "soft",
+// 	      values: [
+// 		      { x: '+=20', y: '-=30' }, 
+// 		      { x: '+=140', y: '-=150' },
+// 		      { x: '+=200', y: '+=195' }
+// 		    ] 
+// 	    }
+// 	  })
+// 	tl.set(playerShadow, { opacity: 0, x: '-=15', y: '-=250' }, "-=1")
+// 	tl.to(playerShadow, 0.5, { opacity: 0.5, x: '-=5', y: '-=120' }, "-=0.5")
+// 	return tl;
+// }
+
 // Transition to the Living room stage
 // 
 // function transitionToLivingRoom() {
