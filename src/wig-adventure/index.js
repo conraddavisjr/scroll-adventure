@@ -50,19 +50,12 @@ movePlayer(s1C1, 'right', 400, 1.5)
 // s1C1.to(rowTwoLandscape_S1, 1.5, { x: -100 }, "-=1.5")
 // s1C1.to(rowThreeLandscape_S1, 1.5, { x: -40 }, "-=1.5")
 
-// 
-// function movePlayer(tween, direction, distance, duration = 0) {
-// 	let dir = direction == 'left' ? '+=' : '-=';
-// 	tween.to(rowOneLandscape_S1, 1, { x: `${dir}${distance}` }, duration)
-// 	tween.to(rowTwoLandscape_S1, 1, { x: `${dir}${distance / 2}` }, duration)
-// 	tween.to(rowThreeLandscape_S1, 1, { x: `${dir}${distance / 4}` }, duration)
-// }
-
+// Scene One, Chapter Two
 
 // charater double jump forward
 var s1C2 = new TimelineMax()
 // Disable the scroll until this animation is complete
-s1C2.call(() => toggleScroll())
+// s1C2.call(() => toggleScroll())
 	s1C2.to(player, 0.5, 
 	{ 
 		bezier: {
@@ -73,9 +66,9 @@ s1C2.call(() => toggleScroll())
 	    ] 
     }
   })
+  // movePlayer(s1C2, 'right', 100, 1)
 	s1C2.to(playerShadow, 0.5, { opacity: 0, x: '+=20', y: '+=370' }, "-=0.5")
   // move environment
-  movePlayer(s1C2, 'right', 100, 1)
 	// second jump
 	s1C2.to(player, 1, 
 	{ 
@@ -87,10 +80,7 @@ s1C2.call(() => toggleScroll())
 	      { x: '+=200', y: '+=195' }
 	    ] 
     }
-  }, "-=1")
- //  s1C2.to(rowOneLandscape_S1, 1, { x: '-=100' }, "-=1")
-	// s1C2.to(rowTwoLandscape_S1, 1, { x: '-=30' }, "-=1")
-	// s1C2.to(rowThreeLandscape_S1, 1, { x: '-=10' }, "-=1")
+  })
 
 	s1C2.set(playerShadow, { opacity: 0, x: '-=15', y: '-=250' }, "-=1")
 	s1C2.to(playerShadow, 0.5, { opacity: 0.5, x: '-=5', y: '-=120' }, "-=0.5")
@@ -104,13 +94,14 @@ s1C2.call(() => toggleScroll())
 	      { x: '+=10', y: '-=5' },
 	      { x: '+=20', y: '+=0' }
 	    ] 
-    }
+    },
+    // onComplete: toggleScroll
   })
   // Disable the scroll until this animation is complete
-	s1C2.call(() => toggleScroll())
+	// s1C2.call(() => toggleScroll())
 
 
-	// Scene One, Chapter Two
+// Scene One, Chapter Three
 var s1C3 = new TimelineMax()
 // player walking, environment moving
 movePlayer(s1C3, 'right', 400, 2)
@@ -119,27 +110,52 @@ s1C3.to(player, 2, { x: '+=320'}, "-=2")
 // s1C1.to(playerShadow, 0.2, { opacity: 1, x: '+=5', y: '-=10' }, "-=0.9")
 // s1C1.to(playerShadow, 0.3, { opacity: 0.5, x: '-=40', y: '-=360' }, "-=0.5")
 
+
 var scene1_1 = new ScrollMagic.Scene({ duration: 500, offset: 0 })
   .setTween(s1C1) // trigger a TweenMax.to tween
   .addIndicators({name: "1 (duration: 0)"}) // add indicators (requires plugin)
   .setPin("#scene") // pins the element for the the scene's duration
   .addTo(controller)
-  .on("update", function() {
-  	// keep track of the scrolling direction
-    scrollDirection = controller.info("scrollDirection")
-	});
 
  var scene1_2 = new ScrollMagic.Scene({ offset: 500 })
   .setTween(s1C2) // trigger a TweenMax.to tween
   .addIndicators({name: "1 (duration: 0)"}) // add indicators (requires plugin)
   .setPin("#scene") // pins the element for the the scene's duration
+  .on('start', () => {
+  	console.log('scene Start')
+  	toggleScroll(2000)
+  })
+
+ //  .on("update", function() {
+ //  	// keep track of the scrolling direction
+ //    scrollDirection = controller.info("scrollDirection")
+ //    console.log('controller.info("scrollDirection"): ', controller.info("scrollDirection"))
+ //    console.log('controller.info("scrollPos"): ', controller.info("scrollPos"))
+ //    console.log('controller.info("size"): ', controller.info("size"))
+	// });
+ //  .on("update", function(event) {
+ //  	console.log('event: ', event)
+
+ //  	// keep track of the scrolling direction
+ //    let progress = controller.info("scrollDirection")
+ //    console.log('controller.info("progress"): ', controller.info("scrollDirection"))
+	// // })
+ //  .on('progress', (event) => {
+ //  	console.log('event.progress: ', event.state)
+ //  	console.log('event.progress: ', event.progress)
+	// }) 
+  // .setClassToggle("body", "disabledScroll")
   .addTo(controller)
 
 
- var scene1_3 = new ScrollMagic.Scene({ duration: 1000, offset: 650 })
+ var scene1_3 = new ScrollMagic.Scene({ duration: 1000, offset: 550 })
   .setTween(s1C3) // trigger a TweenMax.to tween
   .addIndicators({name: "1 (duration: 0)"}) // add indicators (requires plugin)
   // .setPin("#scene") // pins the element for the the scene's duration
+  .on('start', () => console.log('scene Start'))
+  .on('end', () => console.log('scene END'))
+  .on('enter', () => console.log('scene Enter'))
+  .on('leave', () => console.log('scene Left'))
   .addTo(controller)
 
 // 
@@ -147,8 +163,12 @@ var scene1_1 = new ScrollMagic.Scene({ duration: 500, offset: 0 })
 // 
 
 // toggle scrolling on the body
-function toggleScroll() {
-	scrollDirection == 'REVERSE' ? bodyTag.classList.remove('disabledScroll') : bodyTag.classList.toggle('disabledScroll');
+function toggleScroll(delay) {
+	bodyTag.classList.add('disabledScroll')
+	setTimeout(() => {
+		bodyTag.classList.remove('disabledScroll')
+	}, delay)
+	// scrollDirection == 'REVERSE' ? bodyTag.classList.remove('disabledScroll') : bodyTag.classList.toggle('disabledScroll');
 }
 
 // function for handling the environment movement when the player walks
