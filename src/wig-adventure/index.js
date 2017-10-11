@@ -12,6 +12,10 @@ var controller = new ScrollMagic.Controller();
 
 // dom elements
 var player = document.getElementById('player');
+// render the player to the scene
+player.innerHTML = svgMaster.player;
+
+var playerShadow = document.querySelector('.player-shadow');
 var environment = document.querySelector('.environment');
 var rowOneLandscape_S1 = document.querySelector('.rowOneLandscape.s1');
 var rowTwoLandscape_S1 = document.querySelector('.rowTwoLandscape.s1');
@@ -19,8 +23,6 @@ var rowThreeLandscape_S1 = document.querySelector('.rowThreeLandscape.s1');
 
 // render
 // 
-// render the player to the scene
-player.innerHTML = svgMaster.player;
 // environment.innerHTML += `
 // 	<div class="rowOneLandscape"> ${svgMaster.rowOneLandscape} </div>
 // 	<div class="rowTwoEnvironment"> ${svgMaster.rowTwoLandscape} </div>
@@ -32,15 +34,31 @@ var playerOntoScreen = () => {
 	tl.to(player, 1, { x: 200 })
 	return tl;
 }
-playerOntoScreen();
+// playerOntoScreen();
+//  set the default position for the player
+var playerDefaultPosition = new TimelineMax()
+playerDefaultPosition.set(player, { x: 100 })
 
 // build Scene One, Chapter One
 var s1C1 = new TimelineMax()
-s1C1.to(rowOneLandscape_S1, 1, { x: -200 })
-s1C1.to(rowTwoLandscape_S1, 1, { x: -100 }, "-=1")
-s1C1.to(rowThreeLandscape_S1, 1, { x: -40 }, "-=1")
+s1C1.to(rowOneLandscape_S1, 1.5, { x: -400 })
+s1C1.to(rowTwoLandscape_S1, 1.5, { x: -100 }, "-=1.5")
+s1C1.to(rowThreeLandscape_S1, 1.5, { x: -40 }, "-=1.5")
+// s1C1.to(player, 1, { y: -200, x: '+=30' })
+s1C1.to(player, 0.5, 
+	{ 
+		// x: '+=100', 
+		bezier: {
+      type: "soft",
+      values: [
+	      { x: '+=120', y: '-=330' }, 
+	      { x: '+=140', y: '-=200' }
+	    ] 
+    }
+  })
+s1C1.to(playerShadow, 0.5, { opacity: 0, x: '+=20', y: '+=145' }, "-=1")
 
-var scene1 = new ScrollMagic.Scene({ duration: 400, offset: 0 })
+var scene1 = new ScrollMagic.Scene({ duration: 500, offset: 0 })
   .setTween(s1C1) // trigger a TweenMax.to tween
   .addIndicators({name: "1 (duration: 0)"}) // add indicators (requires plugin)
   .setPin("#scene") // pins the element for the the scene's duration
