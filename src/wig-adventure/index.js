@@ -65,7 +65,7 @@ s1C0.set(copyContainer, {
 })
 s1C0.to(playerBody, 0.3, {transformOrigin: 'center center', rotation: '330ccw'})
 s1C0.to(copyContainer, 1, {opacity: 1}, "+=0.7")
-// s1C0.to(phoneSprites, 1, {opacity: 1})
+s1C0.call(staggerPhoneSprites)
 
 // build Scene One, Chapter 1.1
 // var s1C1 = new TimelineMax()
@@ -161,6 +161,13 @@ function movePlayer(tween, direction, distance, timing) {
 	tween.to(rowTwoLandscape_S1, timing, { x: `${dir}${distance / 2}` }, `-=${timing}`)
 	tween.to(rowThreeLandscape_S1, timing, { x: `${dir}${distance / 4}` }, `-=${timing}`)
 }
+
+// staggerPhoneSprites
+function staggerPhoneSprites() {
+	var tl = new TimelineMax()
+	tl.staggerTo([...phoneSprites], 0.5, {opacity: 1}, 0.1)
+}
+
 
 
 // function doubleJumpForward() {
