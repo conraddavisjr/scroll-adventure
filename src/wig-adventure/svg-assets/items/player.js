@@ -2,16 +2,16 @@ const playerSvg = `
 	<svg id="player-svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 96.76 494">
 	<defs>
 		<style>
-			.cls-1{fill:none;}
-			.cls-2{isolation:isolate;}
-			.cls-3{clip-path:url(#clip-path);}
-			.cls-4{fill:#e3dcf4;}
-			.cls-5{fill:#3b596a;}
-			.cls-6{clip-path:url(#clip-path-2);}
-			.cls-7{clip-path:url(#clip-path-3);}
-			.cls-9{opacity:0.4;}
-			.cls-9{mix-blend-mode:multiply;}.cls-10{fill:#ed7b85;}
-			.cls-11{fill:#e75360;}.cls-12{fill:#febe3d;}
+			#player-svg .cls-1{fill:none;}
+			#player-svg .cls-2{isolation:isolate;}
+			#player-svg .cls-3{clip-path:url(#clip-path);}
+			#player-svg .cls-4{fill:#e3dcf4;}
+			#player-svg .cls-5{fill:#3b596a;}
+			#player-svg .cls-6{clip-path:url(#clip-path-2);}
+			#player-svg .cls-7{clip-path:url(#clip-path-3);}
+			#player-svg .cls-9{opacity:0.4;}
+			#player-svg .cls-9{mix-blend-mode:multiply;}.cls-10{fill:#ed7b85;}
+			#player-svg .cls-11{fill:#e75360;}.cls-12{fill:#febe3d;}
 		</style>
 		<clipPath id="clip-path">
 		<rect class="cls-1" x="467" y="-481" width="329.07" height="590.34"/>

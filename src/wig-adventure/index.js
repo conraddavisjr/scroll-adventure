@@ -21,102 +21,119 @@ var player = document.getElementById('player');
 player.innerHTML = svgMaster.player;
 
 // var playerShadow = document.querySelector('.player-shadow');
+var copyContainer = document.querySelector('.copy-container');
 var environment = document.querySelector('.environment');
 var rowOneLandscape_S1 = document.querySelector('.rowOneLandscape.s1');
 var rowTwoLandscape_S1 = document.querySelector('.rowTwoLandscape.s1');
 var rowThreeLandscape_S1 = document.querySelector('.rowThreeLandscape.s1');
+var phoneSpriteGroup = document.querySelector('.phone-sprite-group');
 
+// render the phone sprite to the scene
+phoneSpriteGroup.innerHTML = svgMaster.phoneSprites;
+// setup a selector for the phoneSprites svg
+var phoneSprites = document.querySelectorAll('#phoneSprites_S1 [data-name="phone-sprite"]');
 
+console.log('phoneSprites: ', phoneSprites)
 //  set the default position for the player
+// var playerDefaultPosition = new TimelineMax()
+// playerDefaultPosition.set(player, { x: -75 })
+
 var playerDefaultPosition = new TimelineMax()
-playerDefaultPosition.set(player, { x: 40 })
+playerDefaultPosition.set(playerBody, { x: 40 })
 
-// build Scene One, Chapter One
-var s1C1 = new TimelineMax()
-movePlayer(s1C1, 'right', 400, 1.5)
-// s1C1.to(rowOneLandscape_S1, 1.5, { x: -400 })
-// s1C1.to(rowTwoLandscape_S1, 1.5, { x: -100 }, "-=1.5")
-// s1C1.to(rowThreeLandscape_S1, 1.5, { x: -40 }, "-=1.5")
+//  make player walk on the scene
+// function playerEnterScene() {
 
-// Scene One, Chapter Two
-
-// charater double jump forward
-var s1C2 = new TimelineMax()
-// Disable the scroll until this animation is complete
-// s1C2.call(() => toggleScroll())
-	s1C2.to(player, 0.5, 
-	{ 
-		bezier: {
-      type: "soft",
-      values: [
-	      { x: '+=120', y: '-=330' }, 
-	      { x: '+=140', y: '-=180' }
-	    ] 
-    }
-  })
-  // movePlayer(s1C2, 'right', 100, 1)
-	// s1C2.to(playerShadow, 0.5, { opacity: 0, x: '+=20', y: '+=370' }, "-=0.5")
-  // move environment
-	// second jump
-	s1C2.to(player, 1, 
-	{ 
-		bezier: {
-      type: "soft",
-      values: [
-	      { x: '+=20', y: '-=10' }, 
-	      { x: '+=140', y: '-=150' },
-	      { x: '+=200', y: '+=175' }
-	    ] 
-    },
-    ease: Power3.easeInOut
-  })
+// }
+// var playerEnterScene = new TimelineMax()
+// playerEnterScene.to(player, { x: 40 })
 
 
-	console.log('s1C2.totalTime(): ', s1C2.duration() )
-	// s1C2.set(playerShadow, { opacity: 0, x: '-=15', y: '-=250' }, "-=1")
-	// s1C2.to(playerShadow, 0.5, { opacity: 0.5, x: '-=5', y: '-=120' }, "-=0.5")
-	// landing bounce
-	// s1C2.to(player, 0.3, 
-	// { 
-	// 	bezier: {
- //      type: "soft",
- //      values: [
-	//       { x: '+=0', y: '-=15' }, 
-	//       { x: '+=10', y: '-=5' },
-	//       { x: '+=20', y: '+=0' }
-	//     ] 
- //    },
- //    // onComplete: toggleScroll
- //  })
-  // Disable the scroll until this animation is complete
-	// s1C2.call(() => toggleScroll())
+// build Scene One, Chapter 1.0
+var s1C0 = new TimelineMax()
+s1C0.set(copyContainer, { 
+	css:{ 
+		opacity: 0, 
+		fontFamily: 'Roboto', 
+		textAlign: 'center', 
+		fontSize: '30px', 
+		color:"#DCDCF7", 
+		width: '100%',
+    top: '200px'
+	}, 
+	text: { value: `Women <br> are gaming at <br> unprecedented <br> numbers. `}
+})
+s1C0.to(playerBody, 0.3, {transformOrigin: 'center center', rotation: '330ccw'})
+s1C0.to(copyContainer, 1, {opacity: 1}, "+=0.7")
+// s1C0.to(phoneSprites, 1, {opacity: 1})
+
+// build Scene One, Chapter 1.1
+// var s1C1 = new TimelineMax()
+// movePlayer(s1C1, 'right', 400, 1.5)
+
+// // Scene One, Chapter Two
+// // charater double jump forward
+// var s1C2 = new TimelineMax()
+// // Disable the scroll until this animation is complete
+// 	s1C2.to(player, 0.5, 
+// 	{ 
+// 		bezier: {
+//       type: "soft",
+//       values: [
+// 	      { x: '+=120', y: '-=330' }, 
+// 	      { x: '+=140', y: '-=180' }
+// 	    ] 
+//     }
+//   })
+//   // movePlayer(s1C2, 'right', 100, 1)
+// 	// s1C2.to(playerShadow, 0.5, { opacity: 0, x: '+=20', y: '+=370' }, "-=0.5")
+//   // move environment
+// 	// second jump
+// 	s1C2.to(player, 1, 
+// 	{ 
+// 		bezier: {
+//       type: "soft",
+//       values: [
+// 	      { x: '+=20', y: '-=10' }, 
+// 	      { x: '+=140', y: '-=150' },
+// 	      { x: '+=200', y: '+=175' }
+// 	    ] 
+//     },
+//     ease: Power3.easeInOut
+//   })
 
 
-// Scene One, Chapter Three
-var s1C3 = new TimelineMax()
-// player walking, environment moving
-movePlayer(s1C3, 'right', 400, 2)
-s1C3.to(player, 2, { x: '+=320'}, "-=2")
 
+// // Scene One, Chapter Three
+// var s1C3 = new TimelineMax()
+// // player walking, environment moving
+// movePlayer(s1C3, 'right', 400, 2)
+// s1C3.to(player, 2, { x: '+=320'}, "-=2")
 
-var scene1_1 = new ScrollMagic.Scene({ duration: 500, offset: 0 })
-  .setTween(s1C1) // trigger a TweenMax.to tween
+var scene1_0 = new ScrollMagic.Scene({ duration: 120, offset: 0 })
+  .setTween(s1C0) // trigger a TweenMax.to tween
   .addIndicators({name: "1 (duration: 0)"}) // add indicators (requires plugin)
   .setPin("#scene") // pins the element for the the scene's duration
   .addTo(controller)
 
- var scene1_2 = new ScrollMagic.Scene({ offset: 500 })
-  .setTween(s1C2) // trigger a TweenMax.to tween
-  .addIndicators({name: "1 (duration: 0)"}) // add indicators (requires plugin)
-  .setPin("#scene") // pins the element for the the scene's duration
-  .on('start', () => toggleScroll(s1C2.duration()))
-  .addTo(controller)
+// var scene1_1 = new ScrollMagic.Scene({ duration: 500, offset: 0 })
+//   .setTween(s1C1) // trigger a TweenMax.to tween
+//   .addIndicators({name: "1 (duration: 0)"}) // add indicators (requires plugin)
+//   .setPin("#scene") // pins the element for the the scene's duration
+//   .addTo(controller)
 
- var scene1_3 = new ScrollMagic.Scene({ duration: 1000, offset: 550 })
-  .setTween(s1C3) // trigger a TweenMax.to tween
-  .addIndicators({name: "1 (duration: 0)"}) // add indicators (requires plugin)
-  // .setPin("#scene") // pins the element for the the scene's duration
-  .addTo(controller)
+//  var scene1_2 = new ScrollMagic.Scene({ offset: 500 })
+//   .setTween(s1C2) // trigger a TweenMax.to tween
+//   .addIndicators({name: "1 (duration: 0)"}) // add indicators (requires plugin)
+//   .setPin("#scene") // pins the element for the the scene's duration
+//   .on('start', () => toggleScroll(s1C2.duration()))
+//   .addTo(controller)
+
+//  var scene1_3 = new ScrollMagic.Scene({ duration: 1000, offset: 550 })
+//   .setTween(s1C3) // trigger a TweenMax.to tween
+//   .addIndicators({name: "1 (duration: 0)"}) // add indicators (requires plugin)
+//   // .setPin("#scene") // pins the element for the the scene's duration
+//   .addTo(controller)
 
 // 
 // ANIMATION FUNCTIONS
