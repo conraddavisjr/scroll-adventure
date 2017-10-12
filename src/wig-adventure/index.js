@@ -26,12 +26,10 @@ var rowOneLandscape_S1 = document.querySelector('.rowOneLandscape.s1');
 var rowTwoLandscape_S1 = document.querySelector('.rowTwoLandscape.s1');
 var rowThreeLandscape_S1 = document.querySelector('.rowThreeLandscape.s1');
 
-var hoppingPlayer = new TimelineMax()
-hoppingPlayer.to(playerBody, 0.3, { y: -30, repeat:-1, yoyo:true, ease: Power1.easeOut })
 
 //  set the default position for the player
 var playerDefaultPosition = new TimelineMax()
-playerDefaultPosition.set(player, { x: 100 })
+playerDefaultPosition.set(player, { x: 40 })
 
 // build Scene One, Chapter One
 var s1C1 = new TimelineMax()
@@ -123,6 +121,13 @@ var scene1_1 = new ScrollMagic.Scene({ duration: 500, offset: 0 })
 // 
 // ANIMATION FUNCTIONS
 // 
+
+// Hopping player composition
+function playerIdleHop() {
+	var tl = new TimelineMax()
+	tl.to(playerBody, 0.3, { y: -30, repeat:-1, yoyo:true, ease: Power1.easeOut })
+	return tl;
+}
 
 // toggle scrolling on the body
 function toggleScroll(delay) {
