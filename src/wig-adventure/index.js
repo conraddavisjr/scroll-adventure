@@ -32,6 +32,7 @@ var phoneSpriteGroup = document.querySelector('.phone-sprite-group');
 phoneSpriteGroup.innerHTML = svgMaster.phoneSprites;
 // setup a selector for the phoneSprites svg
 var phoneSprites = document.querySelectorAll('#phoneSprites_S1 [data-name="phone-sprite"]');
+var phoneSpritesGlow = document.querySelectorAll('#phoneSprites_S1 [data-name="phone-sprite-glow"]');
 
 console.log('phoneSprites: ', phoneSprites)
 //  set the default position for the player
@@ -165,7 +166,19 @@ function movePlayer(tween, direction, distance, timing) {
 // staggerPhoneSprites
 function staggerPhoneSprites() {
 	var tl = new TimelineMax()
-	tl.staggerTo([...phoneSprites], 0.5, {opacity: 1}, 0.1)
+	// stagger the phones into view
+	tl.staggerFromTo([...phoneSprites], 0.5, {opacity: 0, scale: 0.9, /*rotation: '40ccw'*/}, {opacity: 1, scale: 1, /*rotation: '0ccw'*/}, 0.1)
+	tl.staggerFromTo([...phoneSpritesGlow], 0.5, {opacity: 0, scale: 0.9, /*rotation: '40ccw'*/}, {opacity: 1, scale: 1, /*rotation: '0ccw'*/}, 0.1, "-=2")
+	// make the phones flicker
+	tl.to([...phoneSprites, ...phoneSpritesGlow], 1, {opacity: 0.4})
+	tl.to([...phoneSprites, ...phoneSpritesGlow], 0.3, {opacity: 0.8})
+	tl.to([...phoneSprites, ...phoneSpritesGlow], 0.2, {opacity: 0.7})
+	tl.to([...phoneSprites, ...phoneSpritesGlow], 0.7, {opacity: 1})
+	tl.to([...phoneSprites, ...phoneSpritesGlow], 1, {opacity: 0.4})
+	tl.to([...phoneSprites, ...phoneSpritesGlow], 0.3, {opacity: 0.8})
+	tl.to([...phoneSprites, ...phoneSpritesGlow], 0.2, {opacity: 0.7})
+	tl.to([...phoneSprites, ...phoneSpritesGlow], 0.7, {opacity: 1})
+
 }
 
 
