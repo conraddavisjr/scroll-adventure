@@ -51,8 +51,8 @@ var s1C2 = new TimelineMax()
 		bezier: {
       type: "soft",
       values: [
-	      { x: '+=120', y: '-=340' }, 
-	      { x: '+=140', y: '-=190' }
+	      { x: '+=120', y: '-=330' }, 
+	      { x: '+=140', y: '-=180' }
 	    ] 
     }
   })
@@ -65,7 +65,7 @@ var s1C2 = new TimelineMax()
 		bezier: {
       type: "soft",
       values: [
-	      { x: '+=20', y: '-=30' }, 
+	      { x: '+=20', y: '-=10' }, 
 	      { x: '+=140', y: '-=150' },
 	      { x: '+=200', y: '+=175' }
 	    ] 
@@ -73,6 +73,8 @@ var s1C2 = new TimelineMax()
     ease: Power3.easeInOut
   })
 
+
+	console.log('s1C2.totalTime(): ', s1C2.duration() )
 	// s1C2.set(playerShadow, { opacity: 0, x: '-=15', y: '-=250' }, "-=1")
 	// s1C2.to(playerShadow, 0.5, { opacity: 0.5, x: '-=5', y: '-=120' }, "-=0.5")
 	// landing bounce
@@ -109,7 +111,7 @@ var scene1_1 = new ScrollMagic.Scene({ duration: 500, offset: 0 })
   .setTween(s1C2) // trigger a TweenMax.to tween
   .addIndicators({name: "1 (duration: 0)"}) // add indicators (requires plugin)
   .setPin("#scene") // pins the element for the the scene's duration
-  .on('start', () => toggleScroll(2000))
+  .on('start', () => toggleScroll(s1C2.duration()))
   .addTo(controller)
 
  var scene1_3 = new ScrollMagic.Scene({ duration: 1000, offset: 550 })
@@ -127,7 +129,7 @@ function toggleScroll(delay) {
 	bodyTag.classList.add('disabledScroll')
 	setTimeout(() => {
 		bodyTag.classList.remove('disabledScroll')
-	}, delay)
+	}, `${delay * 1000}`)
 }
 
 // function for handling the environment movement when the player walks
