@@ -53,8 +53,9 @@ s1C0.to(playerBody, 0.3, {transformOrigin: 'center center', rotation: '330ccw'})
 s1C0.to(copyContainer, 1, {opacity: 1}, "+=0.7")
 // stagger the phone sprites into view and make them flicker
 s1C0.call(staggerPhoneSprites)
+s1C0.to([copyContainer, phoneSpriteGroup], 1, {opacity: 0}, "+=0.7")
 // stop the phones from flickering
-s1C0.call(flickeringPhones, [true], null, "+=2")
+s1C0.call(() => flickeringPhonesTl.pause(), null, null, "+=2")
 
 
 // build Scene One, Chapter 1.1
