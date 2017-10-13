@@ -57,7 +57,18 @@ s1C0.call(staggerPhoneSprites)
 s1C0.to([copyContainer, phoneSpriteGroup], 1, {opacity: 0}, "+=1.7")
 // stop the phones from flickering
 s1C0.call(() => flickeringPhonesTl.pause(), null, null)
-
+s1C0.to(playerBody, 0.3, {transformOrigin: 'center center', rotation: '310ccw'})
+s1C0.set(copyContainer, { 
+	css:{ 
+		fontSize: '60px',
+		fontWeight: 'bold'
+	}, 
+	text: {value: `1`}
+}, "+=0.5")
+s1C0.to(copyContainer, 1, {opacity: 1}, "+=0.7")
+// s1C0.fromTo(copyContainer, 3, {text: {value: `0`}}, {text: {value: `+=100`}}, "+=0.7")
+s1C0.call(numberCount, [copyContainer, 0, 100, 5])
+// s1C0.fromTo(copyContainer, 1, {text: 1}, "+=0.7")
 
 // build Scene One, Chapter 1.1
 // var s1C1 = new TimelineMax()
@@ -102,7 +113,7 @@ s1C0.call(() => flickeringPhonesTl.pause(), null, null)
 // movePlayer(s1C3, 'right', 400, 2)
 // s1C3.to(player, 2, { x: '+=320'}, "-=2")
 
-var scene1_0 = new ScrollMagic.Scene({ duration: 170, offset: 0 })
+var scene1_0 = new ScrollMagic.Scene({ duration: 230, offset: 0 })
   .setTween(s1C0) // trigger a TweenMax.to tween
   .addIndicators({name: "1 (duration: 0)"}) // add indicators (requires plugin)
   .setPin("#scene") // pins the element for the the scene's duration
@@ -189,6 +200,19 @@ function flickeringPhones(paused) {
 	flickeringPhonesTl.add("endTest"); // move to the end of desired testing area
 	// infinitely loop the phone flickering after a single cycle
 	flickeringPhonesTl.add(flickeringPhonesTl.tweenFromTo("startTest", "startTest", {repeat: -1}))
+}
+
+function numberCount(element, startingNumber, finishNumber, duration) {
+	console.log('numberCount CALLED')
+	var count = startingNumber
+	  TweenLite.to(element, duration, {number:`+=${finishNumber}`, onUpdate:updateNumber, ease:Linear.easeNone});
+			
+	function updateNumber() {
+	  element.innerHTML = count;
+	  if (count >= 100) return
+	  count ++
+
+	}
 }
 
 
