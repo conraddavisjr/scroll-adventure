@@ -50,8 +50,11 @@ s1C0.set(copyContainer, {
 })
 s1C0.to(playerBody, 0.3, {transformOrigin: 'center center', rotation: '330ccw'})
 s1C0.to(copyContainer, 1, {opacity: 1}, "+=0.7")
-// stagger the phone sprites into view
+// stagger the phone sprites into view and make them flicker
 s1C0.call(staggerPhoneSprites)
+// stop the phones from flickering
+s1C0.call(flickeringPhones, [true], null, "+=2")
+
 
 // build Scene One, Chapter 1.1
 // var s1C1 = new TimelineMax()
@@ -150,6 +153,7 @@ function movePlayer(tween, direction, distance, timing) {
 
 // staggerPhoneSprites
 function staggerPhoneSprites() {
+	console.log('staggerPhoneSprites CALLED')
 	var tl = new TimelineMax()
 	// stagger the phones into view
 	tl.staggerFromTo([...phoneSprites], 0.5, {opacity: 0, scale: 1, /*rotation: '40ccw'*/}, {opacity: 1, scale: 1, /*rotation: '0ccw'*/}, 0.1)
@@ -159,22 +163,24 @@ function staggerPhoneSprites() {
 
 }
 
-function flickeringPhones() {
-	console.log('flickeringPhones Called')
+var flickeringPhonesTl = new TimelineMax()
+function flickeringPhones(paused) {
+	console.log('flickeringPhones Called - pause status: ', paused)
+	// if the the pause value is truthy, pause the flickeringPhones
+	paused ? flickeringPhonesTl.pause() : flickeringPhonesTl.play();
 	// make the phones flicker
-	var tl = new TimelineMax()
-	tl.add("startTest"); // place at the beginning of the desired testing area
-	tl.to([...phoneSprites, ...phoneSpritesGlow], 0.5, {opacity: 0.6})
-	tl.to([...phoneSprites, ...phoneSpritesGlow], 0.3, {opacity: 0.8})
-	tl.to([...phoneSprites, ...phoneSpritesGlow], 0.2, {opacity: 0.7})
-	tl.to([...phoneSprites, ...phoneSpritesGlow], 0.7, {opacity: 1})
-	tl.to([...phoneSprites, ...phoneSpritesGlow], 1, {opacity: 0.6})
-	tl.to([...phoneSprites, ...phoneSpritesGlow], 0.5, {opacity: 0.7})
-	tl.to([...phoneSprites, ...phoneSpritesGlow], 0.3, {opacity: 0.8})
-	tl.to([...phoneSprites, ...phoneSpritesGlow], 0.2, {opacity: 1})
-	tl.to([...phoneSprites, ...phoneSpritesGlow], 0.7, {opacity: 0.8})
-	tl.add("endTest"); // move to the end of desired testing area
-	tl.add(tl.tweenFromTo("startTest", "startTest", {repeat: -1}))
+	flickeringPhonesTl.add("startTest"); // place at the beginning of the desired testing area
+	flickeringPhonesTl.to([...phoneSprites, ...phoneSpritesGlow], 0.5, {opacity: 0.6})
+	flickeringPhonesTl.to([...phoneSprites, ...phoneSpritesGlow], 0.3, {opacity: 0.8})
+	flickeringPhonesTl.to([...phoneSprites, ...phoneSpritesGlow], 0.2, {opacity: 0.7})
+	flickeringPhonesTl.to([...phoneSprites, ...phoneSpritesGlow], 0.7, {opacity: 1})
+	flickeringPhonesTl.to([...phoneSprites, ...phoneSpritesGlow], 1, {opacity: 0.6})
+	flickeringPhonesTl.to([...phoneSprites, ...phoneSpritesGlow], 0.5, {opacity: 0.7})
+	flickeringPhonesTl.to([...phoneSprites, ...phoneSpritesGlow], 0.3, {opacity: 0.8})
+	flickeringPhonesTl.to([...phoneSprites, ...phoneSpritesGlow], 0.2, {opacity: 1})
+	flickeringPhonesTl.to([...phoneSprites, ...phoneSpritesGlow], 0.7, {opacity: 0.8})
+	flickeringPhonesTl.add("endTest"); // move to the end of desired testing area
+	flickeringPhonesTl.add(flickeringPhonesTl.tweenFromTo("startTest", "startTest", {repeat: -1}))
 }
 
 
