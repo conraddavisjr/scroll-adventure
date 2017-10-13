@@ -5,7 +5,8 @@ import svgMaster from './svg-assets';
 var controller = new ScrollMagic.Controller();
 
 // state vars
-var scrollDirection = '';
+let scrollPos;
+let endPos;
 
 // DOM elements
 var bodyTag = document.querySelector('body')
@@ -103,6 +104,13 @@ var scene1_0 = new ScrollMagic.Scene({ duration: 120, offset: 0 })
   .setTween(s1C0) // trigger a TweenMax.to tween
   .addIndicators({name: "1 (duration: 0)"}) // add indicators (requires plugin)
   .setPin("#scene") // pins the element for the the scene's duration
+  .on("update", (event) => {
+  	console.log('event.scrollPos: ', event.scrollPos)
+  	console.log('event.endPos: ', event.endPos)
+  	
+  	scrollPos = event.scrollPos;
+  	endPos = event.endPos;
+  })
   .addTo(controller)
 
 // var scene1_1 = new ScrollMagic.Scene({ duration: 500, offset: 0 })
@@ -159,8 +167,8 @@ function staggerPhoneSprites() {
 	tl.staggerFromTo([...phoneSprites], 0.5, {opacity: 0, scale: 1, /*rotation: '40ccw'*/}, {opacity: 1, scale: 1, /*rotation: '0ccw'*/}, 0.1)
 	tl.fromTo([...phoneSpritesGlow], 5, {opacity: 0}, {opacity: 1})
 	// make the phones flicker
-	tl.call(flickeringPhones, null, null, "-=3")
-
+	// first check if still in bounds to make the phone flicker
+	scrollPos < endPos && tl.call(flickeringPhones, null, null, "-=3")
 }
 
 var flickeringPhonesTl = new TimelineMax()
