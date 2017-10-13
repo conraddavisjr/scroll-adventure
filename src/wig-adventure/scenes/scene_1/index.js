@@ -29,23 +29,12 @@ phoneSpriteGroup.innerHTML = svgMaster.phoneSprites;
 var phoneSprites = document.querySelectorAll('#phoneSprites_S1 [data-name="phone-sprite"]');
 var phoneSpritesGlow = document.querySelectorAll('#phoneSprites_S1 [data-name="phone-sprite-glow"]');
 
-console.log('phoneSprites: ', phoneSprites)
-//  set the default position for the player
-// var playerDefaultPosition = new TimelineMax()
-// playerDefaultPosition.set(player, { x: -75 })
-
 var playerDefaultPosition = new TimelineMax()
 playerDefaultPosition.set(playerBody, { x: 40 })
 
-//  make player walk on the scene
-// function playerEnterScene() {
-
-// }
-// var playerEnterScene = new TimelineMax()
-// playerEnterScene.to(player, { x: 40 })
-
-
 // build Scene One, Chapter 1.0
+// 
+// Present COPY - fade in
 var s1C0 = new TimelineMax()
 s1C0.set(copyContainer, { 
 	css:{ 
@@ -61,6 +50,7 @@ s1C0.set(copyContainer, {
 })
 s1C0.to(playerBody, 0.3, {transformOrigin: 'center center', rotation: '330ccw'})
 s1C0.to(copyContainer, 1, {opacity: 1}, "+=0.7")
+// stagger the phone sprites into view
 s1C0.call(staggerPhoneSprites)
 
 // build Scene One, Chapter 1.1
@@ -162,20 +152,30 @@ function movePlayer(tween, direction, distance, timing) {
 function staggerPhoneSprites() {
 	var tl = new TimelineMax()
 	// stagger the phones into view
-	tl.staggerFromTo([...phoneSprites], 0.5, {opacity: 0, scale: 0.9, /*rotation: '40ccw'*/}, {opacity: 1, scale: 1, /*rotation: '0ccw'*/}, 0.1)
-	tl.staggerFromTo([...phoneSpritesGlow], 0.5, {opacity: 0, scale: 0.9, /*rotation: '40ccw'*/}, {opacity: 1, scale: 1, /*rotation: '0ccw'*/}, 0.1, "-=2")
+	tl.staggerFromTo([...phoneSprites], 0.5, {opacity: 0, scale: 1, /*rotation: '40ccw'*/}, {opacity: 1, scale: 1, /*rotation: '0ccw'*/}, 0.1)
+	tl.fromTo([...phoneSpritesGlow], 5, {opacity: 0}, {opacity: 1})
 	// make the phones flicker
-	tl.to([...phoneSprites, ...phoneSpritesGlow], 1, {opacity: 0.4})
-	tl.to([...phoneSprites, ...phoneSpritesGlow], 0.3, {opacity: 0.8})
-	tl.to([...phoneSprites, ...phoneSpritesGlow], 0.2, {opacity: 0.7})
-	tl.to([...phoneSprites, ...phoneSpritesGlow], 0.7, {opacity: 1})
-	tl.to([...phoneSprites, ...phoneSpritesGlow], 1, {opacity: 0.4})
-	tl.to([...phoneSprites, ...phoneSpritesGlow], 0.3, {opacity: 0.8})
-	tl.to([...phoneSprites, ...phoneSpritesGlow], 0.2, {opacity: 0.7})
-	tl.to([...phoneSprites, ...phoneSpritesGlow], 0.7, {opacity: 1})
+	tl.call(flickeringPhones, null, null, "-=3")
 
 }
 
+function flickeringPhones() {
+	console.log('flickeringPhones Called')
+	// make the phones flicker
+	var tl = new TimelineMax()
+	tl.add("startTest"); // place at the beginning of the desired testing area
+	tl.to([...phoneSprites, ...phoneSpritesGlow], 0.5, {opacity: 0.6})
+	tl.to([...phoneSprites, ...phoneSpritesGlow], 0.3, {opacity: 0.8})
+	tl.to([...phoneSprites, ...phoneSpritesGlow], 0.2, {opacity: 0.7})
+	tl.to([...phoneSprites, ...phoneSpritesGlow], 0.7, {opacity: 1})
+	tl.to([...phoneSprites, ...phoneSpritesGlow], 1, {opacity: 0.6})
+	tl.to([...phoneSprites, ...phoneSpritesGlow], 0.5, {opacity: 0.7})
+	tl.to([...phoneSprites, ...phoneSpritesGlow], 0.3, {opacity: 0.8})
+	tl.to([...phoneSprites, ...phoneSpritesGlow], 0.2, {opacity: 1})
+	tl.to([...phoneSprites, ...phoneSpritesGlow], 0.7, {opacity: 0.8})
+	tl.add("endTest"); // move to the end of desired testing area
+	tl.add(tl.tweenFromTo("startTest", "startTest", {repeat: -1}))
+}
 
 
 // function doubleJumpForward() {

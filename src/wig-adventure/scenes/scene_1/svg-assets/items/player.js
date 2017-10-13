@@ -1,5 +1,5 @@
 const playerSvg = `
-	<svg id="player-svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 96.76 494">
+	<svg id="player-svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 96.76 96.76">
 	<defs>
 		<style>
 			#player-svg .cls-1{fill:none;}
