@@ -53,9 +53,10 @@ s1C0.to(playerBody, 0.3, {transformOrigin: 'center center', rotation: '330ccw'})
 s1C0.to(copyContainer, 1, {opacity: 1}, "+=0.7")
 // stagger the phone sprites into view and make them flicker
 s1C0.call(staggerPhoneSprites)
-s1C0.to([copyContainer, phoneSpriteGroup], 1, {opacity: 0}, "+=0.7")
+// fade out the copyContainer and the phone sprites
+s1C0.to([copyContainer, phoneSpriteGroup], 1, {opacity: 0}, "+=1.7")
 // stop the phones from flickering
-s1C0.call(() => flickeringPhonesTl.pause(), null, null, "+=2")
+s1C0.call(() => flickeringPhonesTl.pause(), null, null)
 
 
 // build Scene One, Chapter 1.1
@@ -101,14 +102,13 @@ s1C0.call(() => flickeringPhonesTl.pause(), null, null, "+=2")
 // movePlayer(s1C3, 'right', 400, 2)
 // s1C3.to(player, 2, { x: '+=320'}, "-=2")
 
-var scene1_0 = new ScrollMagic.Scene({ duration: 120, offset: 0 })
+var scene1_0 = new ScrollMagic.Scene({ duration: 170, offset: 0 })
   .setTween(s1C0) // trigger a TweenMax.to tween
   .addIndicators({name: "1 (duration: 0)"}) // add indicators (requires plugin)
   .setPin("#scene") // pins the element for the the scene's duration
   .on("update", (event) => {
-  	console.log('event.scrollPos: ', event.scrollPos)
-  	console.log('event.endPos: ', event.endPos)
-  	
+  	// console.log('event.scrollPos: ', event.scrollPos)
+  	// console.log('event.endPos: ', event.endPos)
   	scrollPos = event.scrollPos;
   	endPos = event.endPos;
   })
@@ -162,20 +162,18 @@ function movePlayer(tween, direction, distance, timing) {
 
 // staggerPhoneSprites
 function staggerPhoneSprites() {
-	console.log('staggerPhoneSprites CALLED')
 	var tl = new TimelineMax()
 	// stagger the phones into view
 	tl.staggerFromTo([...phoneSprites], 0.5, {opacity: 0, scale: 1, /*rotation: '40ccw'*/}, {opacity: 1, scale: 1, /*rotation: '0ccw'*/}, 0.1)
 	tl.fromTo([...phoneSpritesGlow], 5, {opacity: 0}, {opacity: 1})
 	// make the phones flicker
-	// first check if still in bounds to make the phone flicker
 	tl.call(flickeringPhones, null, null, "-=3")
 }
 
 var flickeringPhonesTl = new TimelineMax()
 function flickeringPhones(paused) {
 	console.log('flickeringPhones Called - pause status: ', paused)
-	// if the the pause value is truthy, pause the flickeringPhones
+	// if the the paused value is truthy, pause the flickeringPhones, otherwise play the animation
 	scrollPos < endPos ? flickeringPhonesTl.play() : flickeringPhonesTl.pause()
 	// make the phones flicker
 	flickeringPhonesTl.add("startTest"); // place at the beginning of the desired testing area
@@ -189,6 +187,7 @@ function flickeringPhones(paused) {
 	flickeringPhonesTl.to([...phoneSprites, ...phoneSpritesGlow], 0.2, {opacity: 1})
 	flickeringPhonesTl.to([...phoneSprites, ...phoneSpritesGlow], 0.7, {opacity: 0.8})
 	flickeringPhonesTl.add("endTest"); // move to the end of desired testing area
+	// infinitely loop the phone flickering after a single cycle
 	flickeringPhonesTl.add(flickeringPhonesTl.tweenFromTo("startTest", "startTest", {repeat: -1}))
 }
 
