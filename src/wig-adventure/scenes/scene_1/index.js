@@ -168,14 +168,14 @@ function staggerPhoneSprites() {
 	tl.fromTo([...phoneSpritesGlow], 5, {opacity: 0}, {opacity: 1})
 	// make the phones flicker
 	// first check if still in bounds to make the phone flicker
-	scrollPos < endPos && tl.call(flickeringPhones, null, null, "-=3")
+	tl.call(flickeringPhones, null, null, "-=3")
 }
 
 var flickeringPhonesTl = new TimelineMax()
 function flickeringPhones(paused) {
 	console.log('flickeringPhones Called - pause status: ', paused)
 	// if the the pause value is truthy, pause the flickeringPhones
-	paused ? flickeringPhonesTl.pause() : flickeringPhonesTl.play();
+	scrollPos < endPos ? flickeringPhonesTl.play() : flickeringPhonesTl.pause()
 	// make the phones flicker
 	flickeringPhonesTl.add("startTest"); // place at the beginning of the desired testing area
 	flickeringPhonesTl.to([...phoneSprites, ...phoneSpritesGlow], 0.5, {opacity: 0.6})
