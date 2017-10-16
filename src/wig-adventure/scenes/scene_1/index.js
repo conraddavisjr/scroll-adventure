@@ -59,6 +59,7 @@ s1C0.call(staggerPhoneSprites)
 s1C0.to([copyContainer, phoneSpriteGroup], 2.5, {opacity: 0}, "+=1.7")
 // stop the phones from flickering
 s1C0.call(() => flickeringPhonesTl.pause(), null, null)
+// rotate the player to look up
 s1C0.to(playerBody, 0.3, {transformOrigin: 'center center', rotation: '310ccw'})
 s1C0.set(copyContainer, { 
 	css:{ 
@@ -89,7 +90,13 @@ s1C0.set(subCopyContainer, {
 		top: '165px'
 	},
 })
+// fade in the sub copy
 s1C0.to(subCopyContainer, 0.5, { opacity: 1 })
+// slide the copy and 
+s1C0.to([copyContainer, subCopyContainer, overlay], 5, { top: '-100%' }, "+=8")
+s1C0.to(playerBody, 0.7, {transformOrigin: 'center center', rotation: '350cw'}, "-=1")
+// s1C0.call(playerIdleHopTl.pause(), null, null)
+s1C0.call(playerIdleHop)
 // s1C0.call(numberCount, [copyContainer, 0, 100, 5])
 // s1C0.fromTo()
 // s1C0.fromTo(copyContainer, 1, {text: 1}, "+=0.7")
@@ -137,7 +144,7 @@ s1C0.to(subCopyContainer, 0.5, { opacity: 1 })
 // movePlayer(s1C3, 'right', 400, 2)
 // s1C3.to(player, 2, { x: '+=320'}, "-=2")
 
-var scene1_0 = new ScrollMagic.Scene({ duration: 230, offset: 0 })
+var scene1_0 = new ScrollMagic.Scene({ duration: 300, offset: 0 })
   .setTween(s1C0) // trigger a TweenMax.to tween
   .addIndicators({name: "1 (duration: 0)"}) // add indicators (requires plugin)
   .setPin("#scene") // pins the element for the the scene's duration
@@ -173,10 +180,10 @@ var scene1_0 = new ScrollMagic.Scene({ duration: 230, offset: 0 })
 // 
 
 // Hopping player composition
+var playerIdleHopTl = new TimelineMax()
 function playerIdleHop() {
-	var tl = new TimelineMax()
-	tl.to(playerBody, 0.3, { y: -30, repeat:-1, yoyo:true, ease: Power1.easeOut })
-	return tl;
+	playerIdleHopTl.to(playerBody, 0.3, { y: -30, repeat:-1, yoyo:true, ease: Power1.easeOut })
+	return playerIdleHopTl;
 }
 
 // toggle scrolling on the body
