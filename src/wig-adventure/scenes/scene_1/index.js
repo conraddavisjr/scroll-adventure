@@ -7,6 +7,7 @@ var controller = new ScrollMagic.Controller();
 // state vars
 let scrollPos;
 let endPos;
+let scrollingDirection;
 
 // DOM elements
 var bodyTag = document.querySelector('body')
@@ -94,9 +95,10 @@ s1C0.set(subCopyContainer, {
 s1C0.to(subCopyContainer, 0.5, { opacity: 1 })
 // slide the copy and 
 s1C0.to([copyContainer, subCopyContainer, overlay], 5, { top: '-100%' }, "+=8")
-s1C0.to(playerBody, 0.7, {transformOrigin: 'center center', rotation: '350cw'}, "-=1")
+s1C0.to(playerBody, 0.7, {transformOrigin: 'center center', rotation: '350cw', y: 0}, "-=1")
+s1C0.call(playerIdleHop, [true], null)
+s1C0.call(playerIdleHop, [false], null, "+=1")
 // s1C0.call(playerIdleHopTl.pause(), null, null)
-s1C0.call(playerIdleHop)
 // s1C0.call(numberCount, [copyContainer, 0, 100, 5])
 // s1C0.fromTo()
 // s1C0.fromTo(copyContainer, 1, {text: 1}, "+=0.7")
@@ -154,6 +156,9 @@ var scene1_0 = new ScrollMagic.Scene({ duration: 300, offset: 0 })
   	scrollPos = event.scrollPos;
   	endPos = event.endPos;
   })
+  .on("progress", (event) => {
+  	scrollingDirection = event.scrollDirection;
+  })
   .addTo(controller)
 
 // var scene1_1 = new ScrollMagic.Scene({ duration: 500, offset: 0 })
@@ -181,8 +186,17 @@ var scene1_0 = new ScrollMagic.Scene({ duration: 300, offset: 0 })
 
 // Hopping player composition
 var playerIdleHopTl = new TimelineMax()
-function playerIdleHop() {
-	playerIdleHopTl.to(playerBody, 0.3, { y: -30, repeat:-1, yoyo:true, ease: Power1.easeOut })
+function playerIdleHop(paused) {
+	console.log('playerIdleHop Called - paused', paused)
+	// if the the paused value is truthy, pause the playerIdleHopTl and return the player to the ground, otherwise play the animation
+	if (paused) {
+		console.log('pause Called')
+		playerIdleHopTl.set(playerBody, { y: 0})
+		playerIdleHopTl.pause()
+	} else {
+		playerIdleHopTl.play()
+	} 
+	playerIdleHopTl.to(playerBody, 0.3, { y: "-=30", repeat:-1, yoyo:true, ease: Power1.easeOut })
 	return playerIdleHopTl;
 }
 
