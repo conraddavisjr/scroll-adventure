@@ -17,10 +17,12 @@ player.innerHTML = svgMaster.player;
 
 // var playerShadow = document.querySelector('.player-shadow');
 var copyContainer = document.querySelector('.copy-container');
+var subCopyContainer = document.querySelector('.sub-copy-container');
 var environment = document.querySelector('.environment');
 var rowOneLandscape_S1 = document.querySelector('.rowOneLandscape.s1');
 var rowTwoLandscape_S1 = document.querySelector('.rowTwoLandscape.s1');
 var rowThreeLandscape_S1 = document.querySelector('.rowThreeLandscape.s1');
+var overlay = document.querySelector('#scene.s1 .overlay');
 var phoneSpriteGroup = document.querySelector('.phone-sprite-group');
 
 // render the phone sprite to the scene
@@ -37,7 +39,7 @@ playerDefaultPosition.set(playerBody, { x: 40 })
 // 
 // Present COPY - fade in
 var s1C0 = new TimelineMax()
-s1C0.set(copyContainer, { 
+s1C0.set([copyContainer, subCopyContainer], { 
 	css:{ 
 		opacity: 0, 
 		fontFamily: 'Roboto', 
@@ -54,20 +56,42 @@ s1C0.to(copyContainer, 1, {opacity: 1}, "+=0.7")
 // stagger the phone sprites into view and make them flicker
 s1C0.call(staggerPhoneSprites)
 // fade out the copyContainer and the phone sprites
-s1C0.to([copyContainer, phoneSpriteGroup], 1, {opacity: 0}, "+=1.7")
+s1C0.to([copyContainer, phoneSpriteGroup], 2.5, {opacity: 0}, "+=1.7")
 // stop the phones from flickering
 s1C0.call(() => flickeringPhonesTl.pause(), null, null)
 s1C0.to(playerBody, 0.3, {transformOrigin: 'center center', rotation: '310ccw'})
 s1C0.set(copyContainer, { 
 	css:{ 
-		fontSize: '60px',
-		fontWeight: 'bold'
+		fontSize: '7em',
+		fontWeight: 'bold',
+		top: '43px'
 	}, 
-	text: {value: `1`}
+	text: {value: `1%`}
 }, "+=0.5")
+
+var tcd = 0.3 //text count duration
+// count the text up to 65
 s1C0.to(copyContainer, 1, {opacity: 1}, "+=0.7")
-// s1C0.fromTo(copyContainer, 3, {text: {value: `0`}}, {text: {value: `+=100`}}, "+=0.7")
-s1C0.call(numberCount, [copyContainer, 0, 100, 5])
+s1C0.to(copyContainer, tcd, {text: {value: `4%`}}, "+=0.7")
+s1C0.to(copyContainer, tcd, {text: {value: `9%`}})
+s1C0.to(copyContainer, tcd, {text: {value: `12%`}})
+s1C0.to(copyContainer, tcd, {text: {value: `18%`}})
+s1C0.to(copyContainer, tcd, {text: {value: `25%`}})
+s1C0.to(copyContainer, tcd, {text: {value: `37%`}})
+s1C0.to(copyContainer, tcd, {text: {value: `46%`}})
+s1C0.to(copyContainer, tcd, {text: {value: `52%`}})
+s1C0.to(copyContainer, tcd, {text: {value: `65%`}})
+// slide the overlay up
+s1C0.to(overlay, `${tcd * 9}`, {y: '-60%'}, `-=${tcd * 9}`)
+s1C0.set(subCopyContainer, {
+	text: {value: `of women ages 10-65 <br> play games.`},
+	css:{
+		top: '165px'
+	},
+})
+s1C0.to(subCopyContainer, 0.5, { opacity: 1 })
+// s1C0.call(numberCount, [copyContainer, 0, 100, 5])
+// s1C0.fromTo()
 // s1C0.fromTo(copyContainer, 1, {text: 1}, "+=0.7")
 
 // build Scene One, Chapter 1.1
@@ -205,7 +229,8 @@ function flickeringPhones(paused) {
 function numberCount(element, startingNumber, finishNumber, duration) {
 	console.log('numberCount CALLED')
 	var count = startingNumber
-	  TweenLite.to(element, duration, {number:`+=${finishNumber}`, onUpdate:updateNumber, ease:Linear.easeNone});
+
+  // TweenLite.to(element, duration, {number:`+=${finishNumber}`, onUpdate:updateNumber, ease:Linear.easeNone});
 			
 	function updateNumber() {
 	  element.innerHTML = count;
