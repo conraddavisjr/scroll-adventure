@@ -36,68 +36,8 @@ var phoneSpritesGlow = document.querySelectorAll('#phoneSprites_S1 [data-name="p
 var playerDefaultPosition = new TimelineMax()
 playerDefaultPosition.set(playerBody, { x: 40 })
 
-// build Scene One, Chapter 1.0
-// 
-// Present COPY - fade in
-var s1C0 = new TimelineMax()
-s1C0.set([copyContainer, subCopyContainer], { 
-	css:{ 
-		opacity: 0, 
-		fontFamily: 'Roboto', 
-		textAlign: 'center', 
-		fontSize: '30px', 
-		color:"#DCDCF7", 
-		width: '100%',
-    top: '200px'
-	}, 
-	text: { value: `Women <br> are gaming at <br> unprecedented <br> numbers. `}
-})
-s1C0.to(playerBody, 0.3, {transformOrigin: 'center center', rotation: '330ccw'})
-s1C0.to(copyContainer, 1, {opacity: 1}, "+=0.7")
-// stagger the phone sprites into view and make them flicker
-s1C0.call(staggerPhoneSprites)
-// fade out the copyContainer and the phone sprites
-s1C0.to([copyContainer, phoneSpriteGroup], 2.5, {opacity: 0}, "+=1.7")
-// stop the phones from flickering
-s1C0.call(() => flickeringPhonesTl.pause(), null, null)
-// rotate the player to look up
-s1C0.to(playerBody, 0.3, {transformOrigin: 'center center', rotation: '310ccw'})
-s1C0.set(copyContainer, { 
-	css:{ 
-		fontSize: '7em',
-		fontWeight: 'bold',
-		top: '43px'
-	}, 
-	text: {value: `1%`}
-}, "+=0.5")
+import s1_0 from './subscenes/s1_0';
 
-var tcd = 0.3 //text count duration
-// count the text up to 65
-s1C0.to(copyContainer, 1, {opacity: 1}, "+=0.7")
-s1C0.to(copyContainer, tcd, {text: {value: `4%`}}, "+=0.7")
-s1C0.to(copyContainer, tcd, {text: {value: `9%`}})
-s1C0.to(copyContainer, tcd, {text: {value: `12%`}})
-s1C0.to(copyContainer, tcd, {text: {value: `18%`}})
-s1C0.to(copyContainer, tcd, {text: {value: `25%`}})
-s1C0.to(copyContainer, tcd, {text: {value: `37%`}})
-s1C0.to(copyContainer, tcd, {text: {value: `46%`}})
-s1C0.to(copyContainer, tcd, {text: {value: `52%`}})
-s1C0.to(copyContainer, tcd, {text: {value: `65%`}})
-// slide the overlay up
-s1C0.to(overlay, `${tcd * 9}`, {y: '-60%'}, `-=${tcd * 9}`)
-s1C0.set(subCopyContainer, {
-	text: {value: `of women ages 10-65 <br> play games.`},
-	css:{
-		top: '165px'
-	},
-})
-// fade in the sub copy
-s1C0.to(subCopyContainer, 0.5, { opacity: 1 })
-// slide the copy and 
-s1C0.to([copyContainer, subCopyContainer, overlay], 5, { top: '-100%' }, "+=8")
-s1C0.to(playerBody, 0.7, {transformOrigin: 'center center', rotation: '350cw', y: 0}, "-=1")
-s1C0.call(playerIdleHop, [true], null)
-s1C0.call(playerIdleHop, [false], null, "+=1")
 // s1C0.call(playerIdleHopTl.pause(), null, null)
 // s1C0.call(numberCount, [copyContainer, 0, 100, 5])
 // s1C0.fromTo()
@@ -145,21 +85,6 @@ s1C0.call(playerIdleHop, [false], null, "+=1")
 // // player walking, environment moving
 // movePlayer(s1C3, 'right', 400, 2)
 // s1C3.to(player, 2, { x: '+=320'}, "-=2")
-
-var scene1_0 = new ScrollMagic.Scene({ duration: 300, offset: 0 })
-  .setTween(s1C0) // trigger a TweenMax.to tween
-  .addIndicators({name: "1 (duration: 0)"}) // add indicators (requires plugin)
-  .setPin("#scene") // pins the element for the the scene's duration
-  .on("update", (event) => {
-  	// console.log('event.scrollPos: ', event.scrollPos)
-  	// console.log('event.endPos: ', event.endPos)
-  	scrollPos = event.scrollPos;
-  	endPos = event.endPos;
-  })
-  .on("progress", (event) => {
-  	scrollingDirection = event.scrollDirection;
-  })
-  .addTo(controller)
 
 // var scene1_1 = new ScrollMagic.Scene({ duration: 500, offset: 0 })
 //   .setTween(s1C1) // trigger a TweenMax.to tween
@@ -260,6 +185,36 @@ function numberCount(element, startingNumber, finishNumber, duration) {
 
 	}
 }
+
+
+var s1_0_Elements = {
+	copyContainer, 
+	subCopyContainer,
+	playerBody,
+	phoneSpriteGroup,
+	staggerPhoneSprites,
+	overlay,
+	playerIdleHop,
+	flickeringPhonesTl
+}
+
+var s1_0_test = s1_0(s1_0_Elements)
+
+var scene1_0 = new ScrollMagic.Scene({ duration: 300, offset: 0 })
+  .setTween(s1_0_test) // trigger a TweenMax.to tween
+  .addIndicators({name: "1 (duration: 0)"}) // add indicators (requires plugin)
+  .setPin("#scene") // pins the element for the the scene's duration
+  .on("update", (event) => {
+  	// console.log('event.scrollPos: ', event.scrollPos)
+  	// console.log('event.endPos: ', event.endPos)
+  	scrollPos = event.scrollPos;
+  	endPos = event.endPos;
+  })
+  .on("progress", (event) => {
+  	scrollingDirection = event.scrollDirection;
+  })
+  .addTo(controller)
+
 
 
 // function doubleJumpForward() {
