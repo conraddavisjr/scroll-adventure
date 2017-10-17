@@ -1,6 +1,8 @@
 // Scene One, Section 1.0
 // 
 
+import movePlayer from '../../../helpers/movePlayer';
+
 // COPY - fade in
 var s1_0 = (elements) => {
 
@@ -13,8 +15,18 @@ var s1_0 = (elements) => {
 		staggerPhoneSprites,
 		overlay,
 		playerIdleHop,
-	  flickeringPhonesTl
+    flickeringPhonesTl,
+    rowOneLandscape_S1,
+		rowTwoLandscape_S1,
+		rowThreeLandscape_S1
 	} = elements
+
+	// place scene Elements into an array to be passed to the movePlayer func
+	var sceneElements = [
+		rowOneLandscape_S1,
+		rowTwoLandscape_S1, 
+		rowThreeLandscape_S1
+	]
 
 	// init timline for the subscene
 	var s1_0 = new TimelineMax()
@@ -86,6 +98,8 @@ var s1_0 = (elements) => {
 	s1_0.call(() => playerIdleHop(true, elements), null, null)
 	// make the player bounce
 	s1_0.call(() => playerIdleHop(false, elements), null, null, "+=1")
+	// make the player move through the scene
+	movePlayer(s1_0, sceneElements, 'right', 490, 8);
 
 	return s1_0;
 

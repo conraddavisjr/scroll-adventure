@@ -3,6 +3,8 @@ import svgMaster from './svg-assets';
 import staggerPhoneSprites from './composite-animations/staggerPhoneSprites';
 import flickeringPhones from './composite-animations/flickeringPhones';
 import playerIdleHop from './composite-animations/playerIdleHop';
+import toggleScroll from '../../helpers/toggleScroll';
+import movePlayer from '../../helpers/movePlayer';
 
 // init ScrollMagic controller
 var controller = new ScrollMagic.Controller();
@@ -48,40 +50,51 @@ playerDefaultPosition.set(playerBody, { x: 40 })
 // SCENE ONE TIMELINE
 // 
 import s1_0 from './subscenes/s1_0';
-import s1_1 from './subscenes/s1_1';
+// import s1_1 from './subscenes/s1_1';
 
 
 
 // // Scene One, Chapter Two
 // // charater double jump forward
 // var s1C2 = new TimelineMax()
+
+// // place scene Elements into an array to be passed to the movePlayer func
+// 	var sceneElements = [
+// 		rowOneLandscape_S1,
+// 		rowTwoLandscape_S1, 
+// 		rowThreeLandscape_S1
+// 	]
 // // Disable the scroll until this animation is complete
-// 	s1C2.to(player, 0.5, 
-// 	{ 
-// 		bezier: {
-//       type: "soft",
-//       values: [
-// 	      { x: '+=120', y: '-=330' }, 
-// 	      { x: '+=140', y: '-=180' }
-// 	    ] 
-//     }
-//   })
-//   // movePlayer(s1C2, 'right', 100, 1)
-// 	// s1C2.to(playerShadow, 0.5, { opacity: 0, x: '+=20', y: '+=370' }, "-=0.5")
-//   // move environment
-// 	// second jump
-// 	s1C2.to(player, 1, 
-// 	{ 
-// 		bezier: {
-//       type: "soft",
-//       values: [
-// 	      { x: '+=20', y: '-=10' }, 
-// 	      { x: '+=140', y: '-=150' },
-// 	      { x: '+=200', y: '+=175' }
-// 	    ] 
-//     },
-//     ease: Power3.easeInOut
-//   })
+// // make the player move through the scene
+// movePlayer(s1C2, sceneElements, 'right', 190, 0.5);
+// s1C2.to(player, 0.3, { y: "-=250" }, "-=0.5")
+// s1C2.to(player, 0.2, { y: "+=40" })
+// 	// s1C2.to(player, 0.5, 
+	// { 
+	// 	bezier: {
+ //      type: "soft",
+ //      values: [
+	//       { x: '+=120', y: '-=330' }, 
+	//       { x: '+=140', y: '-=180' }
+	//     ] 
+ //    }
+ //  })
+ //  // movePlayer(s1C2, 'right', 100, 1)
+	// // s1C2.to(playerShadow, 0.5, { opacity: 0, x: '+=20', y: '+=370' }, "-=0.5")
+ //  // move environment
+	// // second jump
+	// s1C2.to(player, 1, 
+	// { 
+	// 	bezier: {
+ //      type: "soft",
+ //      values: [
+	//       { x: '+=20', y: '-=10' }, 
+	//       { x: '+=140', y: '-=150' },
+	//       { x: '+=200', y: '+=175' }
+	//     ] 
+ //    },
+ //    ease: Power3.easeInOut
+ //  })
 
 
 
@@ -110,14 +123,6 @@ import s1_1 from './subscenes/s1_1';
 // ANIMATION FUNCTIONS
 // 
 
-// toggle scrolling on the body
-function toggleScroll(delay) {
-	bodyTag.classList.add('disabledScroll')
-	setTimeout(() => {
-		bodyTag.classList.remove('disabledScroll')
-	}, `${delay * 1000}`)
-}
-
 // create a collection of all of the elements in scene ONE
 var s1_Elements = {
 	copyContainer, 
@@ -139,7 +144,7 @@ var s1_Elements = {
 }
 
 var s1_0_tween = s1_0(s1_Elements)
-var scene1_0 = new ScrollMagic.Scene({ duration: 350, offset: 0 })
+var scene1_0 = new ScrollMagic.Scene({ duration: 500, offset: 0 })
   .setTween(s1_0_tween) // trigger a TweenMax.to tween
   .addIndicators({name: "scene1_0"}) // add indicators (requires plugin)
   .setPin("#scene") // pins the element for the the scene's duration
@@ -155,13 +160,19 @@ var scene1_0 = new ScrollMagic.Scene({ duration: 350, offset: 0 })
   .addTo(controller)
 
 
-var s1_1_tween = s1_1(s1_Elements)
-var scene1_1 = new ScrollMagic.Scene({ duration: 500, offset: 360 })
-  .setTween(s1_1_tween) // trigger a TweenMax.to tween
-  .addIndicators({name: "scene1_1"}) // add indicators (requires plugin)
-  .setPin("#scene") // pins the element for the the scene's duration
-  .addTo(controller)
+// var s1_1_tween = s1_1(s1_Elements)
+// var scene1_1 = new ScrollMagic.Scene({ duration: 100, offset: 360 })
+//   .setTween(s1_1_tween) // trigger a TweenMax.to tween
+//   .addIndicators({name: "scene1_1"}) // add indicators (requires plugin)
+//   .setPin("#scene") // pins the element for the the scene's duration
+//   .addTo(controller)
 
+//  var scene1_2 = new ScrollMagic.Scene({ offset: 460 })
+//   .setTween(s1C2) // trigger a TweenMax.to tween
+//   .addIndicators({name: "scene1_2"}) // add indicators (requires plugin)
+//   .setPin("#scene") // pins the element for the the scene's duration
+//   .on('start', () => toggleScroll(s1C2.duration()))
+//   .addTo(controller)
 
 
 // function doubleJumpForward() {
@@ -194,27 +205,6 @@ var scene1_1 = new ScrollMagic.Scene({ duration: 500, offset: 360 })
 // 	tl.to(playerShadow, 0.5, { opacity: 0.5, x: '-=5', y: '-=120' }, "-=0.5")
 // 	return tl;
 // }
-
-// Transition to the Living room stage
-// 
-// function transitionToLivingRoom() {
-// 	var tl = new TimelineMax();
-// 	tl.to(cube, 0.2, { transform:"rotateX(110deg) rotateY(40deg) translateX(-600px) translateY(1420px) translateZ(-900px)" })
-// 	tl.to(camera, 1, { rotationX: '-20_ccw', rotationY: '930_cw', scale: 1.5, y: -190 }, "-=0.5")
-// 	tl.to([topFace, rightFace, bottomFace, leftFace, backFace], 0.5, {opacity: 0.1}, "-=0.5")
-// 	tl.to(topFace, 0.5, { transform:"rotateX(80deg) rotateY(-20deg) rotate(-100deg) translateZ(-500px) translateY(-500px) translateX(1000px)" }, "-=0.5")
-// 	tl.to(rightFace, 0.5, { transform:"rotateY(0deg) rotateX(50deg) translateZ(-1500px) translateY(100px) translateX(-1000px)" }, "-=0.5")
-// 	tl.to(bottomFace, 0.5, { transform:"rotateX(0deg) rotateY(0deg) translateZ(-1080px) translateY(1000px)" }, "-=0.5")
-// 	tl.to(leftFace, 0.5, { transform:"rotateY(0deg) rotateX(0deg) translateZ(-1030px) translateY(300px)" }, "-=0.5")
-// 	tl.to(frontFace, 0.5, { transform:"rotateY(-45deg) translateZ(-430px) translateY(-800px) translateX(700px)" }, "-=0.5") 
-// 	tl.to(backFace, 0.5, { transform:"rotateY(100deg) rotateX(-20deg) translateZ(480px) translateY(-221px)" }, "-=0.5")
-// 	tl.to(frontFace, 0.5, { transform:"rotateY(-70deg) translateZ(-700px) translateY(-1000px) translateX(200px) scale(4)" }, "-=0.3")
-// 	tl.call(() => placeLivingRoomItems())
-// 	return tl;
-// }
-
-// Event listeners
-// frontFace.addEventListener('click', transitionToLivingRoom)
 
 // MASTER TIMELINE
 // 
