@@ -1,10 +1,9 @@
-// build Scene One, Chapter 1.0
+// Scene One, Chapter 1.0
 // 
 
-// Present COPY - fade in
+// COPY - fade in
 var s1_0 = (elements) => {
 
-	console.log('elements: ', elements)
 	const {
 		copyContainer,
 		subCopyContainer,
@@ -17,6 +16,8 @@ var s1_0 = (elements) => {
 
 	} = elements
 
+
+	console.log('s1_0 ELEMENTS: ', elements)
 	var s1_0 = new TimelineMax()
 	s1_0.set([copyContainer, subCopyContainer], { 
 		css:{ 
@@ -33,9 +34,11 @@ var s1_0 = (elements) => {
 	s1_0.to(playerBody, 0.3, {transformOrigin: 'center center', rotation: '330ccw'})
 	s1_0.to(copyContainer, 1, {opacity: 1}, "+=0.7")
 	// stagger the phone sprites into view and make them flicker
-	s1_0.call(staggerPhoneSprites)
+	s1_0.call(() => staggerPhoneSprites(elements))
 	// fade out the copyContainer and the phone sprites
 	s1_0.to([copyContainer, phoneSpriteGroup], 2.5, {opacity: 0}, "+=1.7")
+	// stop the phones from flickering
+	s1_0.call(() => flickeringPhonesTl.play(), null, null)
 	// stop the phones from flickering
 	s1_0.call(() => flickeringPhonesTl.pause(), null, null)
 	// rotate the player to look up

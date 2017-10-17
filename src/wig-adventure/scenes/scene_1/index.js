@@ -1,5 +1,7 @@
 
 import svgMaster from './svg-assets';
+import staggerPhoneSprites from './composite-animations/staggerPhoneSprites';
+import flickeringPhones from './composite-animations/flickeringPhones';
 
 // init ScrollMagic controller
 var controller = new ScrollMagic.Controller();
@@ -32,6 +34,9 @@ phoneSpriteGroup.innerHTML = svgMaster.phoneSprites;
 // setup a selector for the phoneSprites svg
 var phoneSprites = document.querySelectorAll('#phoneSprites_S1 [data-name="phone-sprite"]');
 var phoneSpritesGlow = document.querySelectorAll('#phoneSprites_S1 [data-name="phone-sprite-glow"]');
+
+// global timelines
+var flickeringPhonesTl = new TimelineMax()
 
 var playerDefaultPosition = new TimelineMax()
 playerDefaultPosition.set(playerBody, { x: 40 })
@@ -141,67 +146,25 @@ function movePlayer(tween, direction, distance, timing) {
 	tween.to(rowThreeLandscape_S1, timing, { x: `${dir}${distance / 4}` }, `-=${timing}`)
 }
 
-// staggerPhoneSprites
-function staggerPhoneSprites() {
-	var tl = new TimelineMax()
-	// stagger the phones into view
-	tl.staggerFromTo([...phoneSprites], 0.5, {opacity: 0, scale: 1, /*rotation: '40ccw'*/}, {opacity: 1, scale: 1, /*rotation: '0ccw'*/}, 0.1)
-	tl.fromTo([...phoneSpritesGlow], 5, {opacity: 0}, {opacity: 1})
-	// make the phones flicker
-	tl.call(flickeringPhones, null, null, "-=3")
-}
-
-var flickeringPhonesTl = new TimelineMax()
-function flickeringPhones(paused) {
-	console.log('flickeringPhones Called - pause status: ', paused)
-	// if the the paused value is truthy, pause the flickeringPhones, otherwise play the animation
-	scrollPos < endPos ? flickeringPhonesTl.play() : flickeringPhonesTl.pause()
-	// make the phones flicker
-	flickeringPhonesTl.add("startTest"); // place at the beginning of the desired testing area
-	flickeringPhonesTl.to([...phoneSprites, ...phoneSpritesGlow], 0.5, {opacity: 0.6})
-	flickeringPhonesTl.to([...phoneSprites, ...phoneSpritesGlow], 0.3, {opacity: 0.8})
-	flickeringPhonesTl.to([...phoneSprites, ...phoneSpritesGlow], 0.2, {opacity: 0.7})
-	flickeringPhonesTl.to([...phoneSprites, ...phoneSpritesGlow], 0.7, {opacity: 1})
-	flickeringPhonesTl.to([...phoneSprites, ...phoneSpritesGlow], 1, {opacity: 0.6})
-	flickeringPhonesTl.to([...phoneSprites, ...phoneSpritesGlow], 0.5, {opacity: 0.7})
-	flickeringPhonesTl.to([...phoneSprites, ...phoneSpritesGlow], 0.3, {opacity: 0.8})
-	flickeringPhonesTl.to([...phoneSprites, ...phoneSpritesGlow], 0.2, {opacity: 1})
-	flickeringPhonesTl.to([...phoneSprites, ...phoneSpritesGlow], 0.7, {opacity: 0.8})
-	flickeringPhonesTl.add("endTest"); // move to the end of desired testing area
-	// infinitely loop the phone flickering after a single cycle
-	flickeringPhonesTl.add(flickeringPhonesTl.tweenFromTo("startTest", "startTest", {repeat: -1}))
-}
-
-function numberCount(element, startingNumber, finishNumber, duration) {
-	console.log('numberCount CALLED')
-	var count = startingNumber
-
-  // TweenLite.to(element, duration, {number:`+=${finishNumber}`, onUpdate:updateNumber, ease:Linear.easeNone});
-			
-	function updateNumber() {
-	  element.innerHTML = count;
-	  if (count >= 100) return
-	  count ++
-
-	}
-}
-
-
-var s1_0_Elements = {
+// create a collection of all of the elements in scene one
+var s1_Elements = {
 	copyContainer, 
 	subCopyContainer,
 	playerBody,
 	phoneSpriteGroup,
+	phoneSprites,
+	phoneSpritesGlow,
 	staggerPhoneSprites,
 	overlay,
 	playerIdleHop,
+	flickeringPhones,
 	flickeringPhonesTl
 }
 
-var s1_0_test = s1_0(s1_0_Elements)
+var s1_0_tween = s1_0(s1_Elements)
 
 var scene1_0 = new ScrollMagic.Scene({ duration: 300, offset: 0 })
-  .setTween(s1_0_test) // trigger a TweenMax.to tween
+  .setTween(s1_0_tween) // trigger a TweenMax.to tween
   .addIndicators({name: "1 (duration: 0)"}) // add indicators (requires plugin)
   .setPin("#scene") // pins the element for the the scene's duration
   .on("update", (event) => {
