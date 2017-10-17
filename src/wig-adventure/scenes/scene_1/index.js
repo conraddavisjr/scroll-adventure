@@ -2,6 +2,7 @@
 import svgMaster from './svg-assets';
 import staggerPhoneSprites from './composite-animations/staggerPhoneSprites';
 import flickeringPhones from './composite-animations/flickeringPhones';
+import playerIdleHop from './composite-animations/playerIdleHop';
 
 // init ScrollMagic controller
 var controller = new ScrollMagic.Controller();
@@ -35,9 +36,11 @@ phoneSpriteGroup.innerHTML = svgMaster.phoneSprites;
 var phoneSprites = document.querySelectorAll('#phoneSprites_S1 [data-name="phone-sprite"]');
 var phoneSpritesGlow = document.querySelectorAll('#phoneSprites_S1 [data-name="phone-sprite-glow"]');
 
-// global timelines
+// global timelines scoped to Scene ONE
 var flickeringPhonesTl = new TimelineMax()
+var playerIdleHopTl = new TimelineMax()
 var playerDefaultPosition = new TimelineMax()
+
 playerDefaultPosition.set(playerBody, { x: 40 })
 
 
@@ -45,10 +48,9 @@ playerDefaultPosition.set(playerBody, { x: 40 })
 // SCENE ONE TIMELINE
 // 
 import s1_0 from './subscenes/s1_0';
+import s1_1 from './subscenes/s1_1';
 
-// build Scene One, Chapter 1.1
-var s1C1 = new TimelineMax()
-movePlayer(s1C1, 'right', 400, 1.5)
+
 
 // // Scene One, Chapter Two
 // // charater double jump forward
@@ -108,20 +110,6 @@ movePlayer(s1C1, 'right', 400, 1.5)
 // ANIMATION FUNCTIONS
 // 
 
-// Hopping player composition
-var playerIdleHopTl = new TimelineMax()
-function playerIdleHop(paused) {
-	// if the the paused value is truthy, pause the playerIdleHopTl and return the player to the ground, otherwise play the animation
-	if (paused) {
-		playerIdleHopTl.set(playerBody, { y: 0 })
-		playerIdleHopTl.pause()
-	} else {
-		playerIdleHopTl.play()
-	} 
-	playerIdleHopTl.to(playerBody, 0.3, { y: "-=30", repeat: -1, yoyo:true, ease: Power1.easeOut })
-	return playerIdleHopTl;
-}
-
 // toggle scrolling on the body
 function toggleScroll(delay) {
 	bodyTag.classList.add('disabledScroll')
@@ -130,18 +118,14 @@ function toggleScroll(delay) {
 	}, `${delay * 1000}`)
 }
 
-// function for handling the environment movement when the player walks
-function movePlayer(tween, direction, distance, timing) {
-	let dir = direction == 'left' ? '+=' : '-=';
-	tween.to(rowOneLandscape_S1, timing, { x: `${dir}${distance}` }), `-=${timing}`
-	tween.to(rowTwoLandscape_S1, timing, { x: `${dir}${distance / 2}` }, `-=${timing}`)
-	tween.to(rowThreeLandscape_S1, timing, { x: `${dir}${distance / 4}` }, `-=${timing}`)
-}
-
-// create a collection of all of the elements in scene one
+// create a collection of all of the elements in scene ONE
 var s1_Elements = {
 	copyContainer, 
 	subCopyContainer,
+	environment,
+	rowOneLandscape_S1,
+	rowTwoLandscape_S1,
+	rowThreeLandscape_S1,
 	playerBody,
 	phoneSpriteGroup,
 	phoneSprites,
@@ -150,14 +134,14 @@ var s1_Elements = {
 	overlay,
 	playerIdleHop,
 	flickeringPhones,
-	flickeringPhonesTl
+	flickeringPhonesTl,
+	playerIdleHopTl
 }
 
 var s1_0_tween = s1_0(s1_Elements)
-
 var scene1_0 = new ScrollMagic.Scene({ duration: 350, offset: 0 })
   .setTween(s1_0_tween) // trigger a TweenMax.to tween
-  .addIndicators({name: "1 (duration: 0)"}) // add indicators (requires plugin)
+  .addIndicators({name: "scene1_0"}) // add indicators (requires plugin)
   .setPin("#scene") // pins the element for the the scene's duration
   .on("update", (event) => {
   	// console.log('event.scrollPos: ', event.scrollPos)
@@ -171,9 +155,10 @@ var scene1_0 = new ScrollMagic.Scene({ duration: 350, offset: 0 })
   .addTo(controller)
 
 
-var scene1_1 = new ScrollMagic.Scene({ duration: 500, offset: 400 })
-  .setTween(s1C1) // trigger a TweenMax.to tween
-  .addIndicators({name: "1 (duration: 0)"}) // add indicators (requires plugin)
+var s1_1_tween = s1_1(s1_Elements)
+var scene1_1 = new ScrollMagic.Scene({ duration: 500, offset: 360 })
+  .setTween(s1_1_tween) // trigger a TweenMax.to tween
+  .addIndicators({name: "scene1_1"}) // add indicators (requires plugin)
   .setPin("#scene") // pins the element for the the scene's duration
   .addTo(controller)
 
