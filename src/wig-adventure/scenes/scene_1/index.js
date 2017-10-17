@@ -103,13 +103,13 @@ var s1_1_tween = s1_1(s1_Elements)
 var scene1_1 = new ScrollMagic.Scene({ offset: 2000 })
 	.setTween(s1_1_tween) // trigger a TweenMax.to tween
 	.addIndicators({name: "scene1_1"}) // add indicators (requires plugin)
-	.setPin("#scene") // pins the element for the the scene's duration
+	// .setPin("#scene") // pins the element for the the scene's duration
 	.on('start', () => toggleScroll(s1_1_tween.duration()))
 	.addTo(controller)
 
-// var s1_2_tween = s1_2(s1_Elements)
-// var scene1_2 = new ScrollMagic.Scene({ duration: 200, offset: 2010 })
-// 	.setTween(s1_2_tween) // trigger a TweenMax.to tween
-// 	.addIndicators({name: "scene1_2"}) // add indicators (requires plugin)
-// 	.setPin("#scene") // pins the element for the the scene's duration
-// 	.addTo(controller)
+var s1_2_tween = s1_2(s1_Elements)
+var scene1_2 = new ScrollMagic.Scene({ duration: 200, offset: 2010 })
+	.setTween(s1_2_tween) // trigger a TweenMax.to tween
+	.addIndicators({name: "scene1_2"}) // add indicators (requires plugin)
+	.setPin("#scene") // pins the element for the the scene's duration
+	.addTo(controller)

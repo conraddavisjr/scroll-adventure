@@ -44,11 +44,13 @@ var s1_0 = (elements) => {
 		}, 
 		text: { value: `Women <br> are gaming at <br> unprecedented <br> numbers. `}
 	})
+	s1_0.set(phoneSpriteGroup, {opacity: 0})
 	// tilt the player to "look up"
 	s1_0.to(playerBody, 0.3, {transformOrigin: 'center center', rotation: '330ccw'})
 	// fade the copy in
 	s1_0.to(copyContainer, 5, {opacity: 1}, "+=0.7")
 	// stagger the phone sprites into view and make them flicker
+	s1_0.set(phoneSpriteGroup, {opacity: 1})
 	s1_0.call(() => staggerPhoneSprites(elements))
 	// fade out the copyContainer and the phone sprites
 	s1_0.to([copyContainer, phoneSpriteGroup], 5, {opacity: 0}, "+=12")
