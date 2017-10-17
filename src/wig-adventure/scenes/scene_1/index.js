@@ -37,20 +37,18 @@ var phoneSpritesGlow = document.querySelectorAll('#phoneSprites_S1 [data-name="p
 
 // global timelines
 var flickeringPhonesTl = new TimelineMax()
-
 var playerDefaultPosition = new TimelineMax()
 playerDefaultPosition.set(playerBody, { x: 40 })
 
+
+// 
+// SCENE ONE TIMELINE
+// 
 import s1_0 from './subscenes/s1_0';
 
-// s1C0.call(playerIdleHopTl.pause(), null, null)
-// s1C0.call(numberCount, [copyContainer, 0, 100, 5])
-// s1C0.fromTo()
-// s1C0.fromTo(copyContainer, 1, {text: 1}, "+=0.7")
-
 // build Scene One, Chapter 1.1
-// var s1C1 = new TimelineMax()
-// movePlayer(s1C1, 'right', 400, 1.5)
+var s1C1 = new TimelineMax()
+movePlayer(s1C1, 'right', 400, 1.5)
 
 // // Scene One, Chapter Two
 // // charater double jump forward
@@ -91,11 +89,7 @@ import s1_0 from './subscenes/s1_0';
 // movePlayer(s1C3, 'right', 400, 2)
 // s1C3.to(player, 2, { x: '+=320'}, "-=2")
 
-// var scene1_1 = new ScrollMagic.Scene({ duration: 500, offset: 0 })
-//   .setTween(s1C1) // trigger a TweenMax.to tween
-//   .addIndicators({name: "1 (duration: 0)"}) // add indicators (requires plugin)
-//   .setPin("#scene") // pins the element for the the scene's duration
-//   .addTo(controller)
+
 
 //  var scene1_2 = new ScrollMagic.Scene({ offset: 500 })
 //   .setTween(s1C2) // trigger a TweenMax.to tween
@@ -117,16 +111,14 @@ import s1_0 from './subscenes/s1_0';
 // Hopping player composition
 var playerIdleHopTl = new TimelineMax()
 function playerIdleHop(paused) {
-	console.log('playerIdleHop Called - paused', paused)
 	// if the the paused value is truthy, pause the playerIdleHopTl and return the player to the ground, otherwise play the animation
 	if (paused) {
-		console.log('pause Called')
-		playerIdleHopTl.set(playerBody, { y: 0})
+		playerIdleHopTl.set(playerBody, { y: 0 })
 		playerIdleHopTl.pause()
 	} else {
 		playerIdleHopTl.play()
 	} 
-	playerIdleHopTl.to(playerBody, 0.3, { y: "-=30", repeat:-1, yoyo:true, ease: Power1.easeOut })
+	playerIdleHopTl.to(playerBody, 0.3, { y: "-=30", repeat: -1, yoyo:true, ease: Power1.easeOut })
 	return playerIdleHopTl;
 }
 
@@ -163,7 +155,7 @@ var s1_Elements = {
 
 var s1_0_tween = s1_0(s1_Elements)
 
-var scene1_0 = new ScrollMagic.Scene({ duration: 300, offset: 0 })
+var scene1_0 = new ScrollMagic.Scene({ duration: 350, offset: 0 })
   .setTween(s1_0_tween) // trigger a TweenMax.to tween
   .addIndicators({name: "1 (duration: 0)"}) // add indicators (requires plugin)
   .setPin("#scene") // pins the element for the the scene's duration
@@ -176,6 +168,13 @@ var scene1_0 = new ScrollMagic.Scene({ duration: 300, offset: 0 })
   .on("progress", (event) => {
   	scrollingDirection = event.scrollDirection;
   })
+  .addTo(controller)
+
+
+var scene1_1 = new ScrollMagic.Scene({ duration: 500, offset: 400 })
+  .setTween(s1C1) // trigger a TweenMax.to tween
+  .addIndicators({name: "1 (duration: 0)"}) // add indicators (requires plugin)
+  .setPin("#scene") // pins the element for the the scene's duration
   .addTo(controller)
 
 

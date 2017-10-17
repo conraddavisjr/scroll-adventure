@@ -13,11 +13,8 @@ var s1_0 = (elements) => {
 		overlay,
 		playerIdleHop,
 	  flickeringPhonesTl
-
 	} = elements
 
-
-	console.log('s1_0 ELEMENTS: ', elements)
 	var s1_0 = new TimelineMax()
 	s1_0.set([copyContainer, subCopyContainer], { 
 		css:{ 
@@ -32,11 +29,11 @@ var s1_0 = (elements) => {
 		text: { value: `Women <br> are gaming at <br> unprecedented <br> numbers. `}
 	})
 	s1_0.to(playerBody, 0.3, {transformOrigin: 'center center', rotation: '330ccw'})
-	s1_0.to(copyContainer, 1, {opacity: 1}, "+=0.7")
+	s1_0.to(copyContainer, 5, {opacity: 1}, "+=0.7")
 	// stagger the phone sprites into view and make them flicker
 	s1_0.call(() => staggerPhoneSprites(elements))
 	// fade out the copyContainer and the phone sprites
-	s1_0.to([copyContainer, phoneSpriteGroup], 2.5, {opacity: 0}, "+=1.7")
+	s1_0.to([copyContainer, phoneSpriteGroup], 5, {opacity: 0}, "+=2.7")
 	// stop the phones from flickering
 	s1_0.call(() => flickeringPhonesTl.play(), null, null)
 	// stop the phones from flickering
@@ -52,7 +49,7 @@ var s1_0 = (elements) => {
 		text: {value: `1%`}
 	}, "+=0.5")
 
-	var tcd = 0.3 //text count duration
+	var tcd = 0.5 //text count duration
 	// count the text up to 65
 	s1_0.to(copyContainer, 1, {opacity: 1}, "+=0.7")
 	s1_0.to(copyContainer, tcd, {text: {value: `4%`}}, "+=0.7")
@@ -75,7 +72,7 @@ var s1_0 = (elements) => {
 	// fade in the sub copy
 	s1_0.to(subCopyContainer, 0.5, { opacity: 1 })
 	// slide the copy and 
-	s1_0.to([copyContainer, subCopyContainer, overlay], 5, { top: '-100%' }, "+=8")
+	s1_0.to([copyContainer, subCopyContainer, overlay], 8, { top: '-50%' }, "+=8")
 	s1_0.to(playerBody, 0.7, {transformOrigin: 'center center', rotation: '350cw', y: 0}, "-=1")
 	s1_0.call(playerIdleHop, [true], null)
 	s1_0.call(playerIdleHop, [false], null, "+=1")
