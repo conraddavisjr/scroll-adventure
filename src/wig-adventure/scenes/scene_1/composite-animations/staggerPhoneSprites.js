@@ -1,6 +1,5 @@
 // staggerPhoneSprites
 var staggerPhoneSprites = (elements) => {
-	console.log('staggerPhoneSprites CALLED - elements: ', elements)
 	// destructure the neccessary elements
 	const { 
 		phoneSprites,
