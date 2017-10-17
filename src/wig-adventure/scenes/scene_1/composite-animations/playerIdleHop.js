@@ -6,7 +6,6 @@ var playerIdleHop = (paused, elements) => {
 	  playerIdleHopTl 
 	} = elements
 	
-	console.log('playerIdleHop CALLED')
 	// if the the paused value is truthy, pause the playerIdleHopTl and return the player to the ground, otherwise play the animation
 	if (paused) {
 		playerIdleHopTl.set(playerBody, { y: 0 })

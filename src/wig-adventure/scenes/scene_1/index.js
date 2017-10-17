@@ -4,10 +4,7 @@ import flickeringPhones from './composite-animations/flickeringPhones';
 import playerIdleHop from './composite-animations/playerIdleHop';
 import toggleScroll from '../../helpers/toggleScroll';
 
-// init ScrollMagic controller
-var controller = new ScrollMagic.Controller();
-
-// inject SCENE ONE into the master scene
+// inject SCENE ONE HTML into the master scene
 var masterScene = document.getElementById('master-scene')
 masterScene.innerHTML += `
 	<div id="scene" class="s1">
@@ -62,12 +59,6 @@ playerDefaultPosition.set(playerBody, { x: 40 })
 
 
 // 
-// SCENE ONE TIMELINE
-// 
-import s1_0 from './subscenes/s1_0';
-import s1_1 from './subscenes/s1_1';
-
-// 
 // ELEMENT COLLECTION
 // create a collection of all of the elements in scene ONE
 // 
@@ -90,17 +81,35 @@ var s1_Elements = {
 	playerIdleHopTl
 }
 
+
+// 
+// SCENE ONE TIMELINE
+// 
+import s1_0 from './subscenes/s1_0';
+import s1_1 from './subscenes/s1_1';
+import s1_2 from './subscenes/s1_2';
+
+// init ScrollMagic controller
+var controller = new ScrollMagic.Controller();
+
 var s1_0_tween = s1_0(s1_Elements)
-var scene1_0 = new ScrollMagic.Scene({ duration: 500, offset: 0 })
+var scene1_0 = new ScrollMagic.Scene({ duration: 2000, offset: 0 })
   .setTween(s1_0_tween) // trigger a TweenMax.to tween
-  .addIndicators({name: "scene1_0"}) // add indicators (requires plugin)
+  // .addIndicators({name: "scene1_0"}) // add indicators (requires plugin)
   .setPin("#scene") // pins the element for the the scene's duration
   .addTo(controller)
 
 var s1_1_tween = s1_1(s1_Elements)
-var scene1_1 = new ScrollMagic.Scene({ offset: 500 })
+var scene1_1 = new ScrollMagic.Scene({ offset: 2000 })
 	.setTween(s1_1_tween) // trigger a TweenMax.to tween
 	.addIndicators({name: "scene1_1"}) // add indicators (requires plugin)
 	.setPin("#scene") // pins the element for the the scene's duration
 	.on('start', () => toggleScroll(s1_1_tween.duration()))
 	.addTo(controller)
+
+// var s1_2_tween = s1_2(s1_Elements)
+// var scene1_2 = new ScrollMagic.Scene({ duration: 200, offset: 2010 })
+// 	.setTween(s1_2_tween) // trigger a TweenMax.to tween
+// 	.addIndicators({name: "scene1_2"}) // add indicators (requires plugin)
+// 	.setPin("#scene") // pins the element for the the scene's duration
+// 	.addTo(controller)
