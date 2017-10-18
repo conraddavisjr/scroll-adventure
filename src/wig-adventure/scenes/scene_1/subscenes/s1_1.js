@@ -12,7 +12,8 @@ var s1_1 = (elements) => {
 		playerIdleHop,
 		rowOneLandscape_S1,
 		rowTwoLandscape_S1,
-		rowThreeLandscape_S1
+		rowThreeLandscape_S1,
+		playerIdleHopTl
 	} = elements
 
 	// place scene Elements into an array to be passed to the movePlayer func
@@ -25,16 +26,15 @@ var s1_1 = (elements) => {
 	// stop the player from jumping and make them jump in reverse direction
 	s1_1.call(() => playerIdleHop(false, elements))
 	s1_1.call(() => playerIdleHop(true, elements))
-	// playerIdleHopTl.pause()
 	// simulate a double jump onto then off of the rock
 	// 1st jump
-	movePlayer(s1_1, sceneElements, 'right', 190, 0.5);
-	s1_1.to(player, 0.3, { y: "-=250" }, "-=0.5")
+	movePlayer(s1_1, sceneElements, 'right', 150, 0.5);
+	s1_1.to(player, 0.3, { x: 40, y: "-=250" }, "-=0.5")
 	s1_1.to(player, 0.2, { y: "+=50" })
 	// 2nd jump
 	movePlayer(s1_1, sceneElements, 'right', 190, 0.5);
 	s1_1.to(player, 0.3, { y: "-=50" }, "-=0.5")
-	s1_1.to(player, 0.2, { y: 0 })
+	s1_1.to(player, 0.2, { x: "-=40", y: 0 })
 	s1_1.call(() => playerIdleHop(false, elements))
 
 	return s1_1;

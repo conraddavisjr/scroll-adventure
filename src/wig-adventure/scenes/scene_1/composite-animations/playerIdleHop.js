@@ -1,5 +1,6 @@
 // Hopping player animation
 var playerIdleHop = (paused, elements) => {
+	console.log('playerIdleHop CALLED - paused: ', paused)
 	// destructure the elements passed in
 	const { 
 	  playerBody,

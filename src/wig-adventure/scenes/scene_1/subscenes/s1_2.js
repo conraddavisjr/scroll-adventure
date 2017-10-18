@@ -24,7 +24,7 @@ var s1_2 = (elements) => {
 	]
 
 	// make the player walk throught the scene, up to the ledge
-	movePlayer(s1_2, sceneElements, 'right', 780, 10);
+	movePlayer(s1_2, sceneElements, 'right', 825, 20);
 	// make the player from bounce in reverse frame
 	s1_2.call(() => playerIdleHop(true, elements), null, null)
 	// stop the player from bouncing

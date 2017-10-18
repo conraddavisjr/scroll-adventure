@@ -58,6 +58,12 @@ var playerDefaultPosition = new TimelineMax()
 playerDefaultPosition.set(playerBody, { x: 40 })
 
 
+// calculate offset
+function calculateOffset(offset, prevDuration, prevOffset ) {
+	return offset + prevDuration + prevOffset
+}
+
+
 // 
 // ELEMENT COLLECTION
 // create a collection of all of the elements in scene ONE
@@ -92,15 +98,19 @@ import s1_2 from './subscenes/s1_2';
 // init ScrollMagic controller
 var controller = new ScrollMagic.Controller();
 
-var s1_0_tween = s1_0(s1_Elements)
-var scene1_0 = new ScrollMagic.Scene({ duration: 2000, offset: 0 })
+var s1_0_tween = s1_0(s1_Elements);
+var s1_0_duration = 3000;
+var s1_0_offset = 0;
+var scene1_0 = new ScrollMagic.Scene({ duration: s1_0_duration, offset: s1_0_offset })
   .setTween(s1_0_tween) // trigger a TweenMax.to tween
-  // .addIndicators({name: "scene1_0"}) // add indicators (requires plugin)
+  // .addIndicators({name: "s1_0"}) // add indicators (requires plugin)
   .setPin("#scene") // pins the element for the the scene's duration
   .addTo(controller)
 
-var s1_1_tween = s1_1(s1_Elements)
-var scene1_1 = new ScrollMagic.Scene({ offset: 2000 })
+var s1_1_tween = s1_1(s1_Elements);
+var s1_1_duration = 0;
+var s1_1_offset = calculateOffset(0, s1_0_duration, s1_0_offset);
+var scene1_1 = new ScrollMagic.Scene({ offset: s1_1_offset })
 	.setTween(s1_1_tween) // trigger a TweenMax.to tween
 	.addIndicators({name: "scene1_1"}) // add indicators (requires plugin)
 	// .setPin("#scene") // pins the element for the the scene's duration
@@ -108,7 +118,9 @@ var scene1_1 = new ScrollMagic.Scene({ offset: 2000 })
 	.addTo(controller)
 
 var s1_2_tween = s1_2(s1_Elements)
-var scene1_2 = new ScrollMagic.Scene({ duration: 1000, offset: 2020 })
+var s1_2_duration = 1000;
+var s1_2_offset = calculateOffset(20, s1_1_duration, s1_1_offset)
+var scene1_2 = new ScrollMagic.Scene({ duration: s1_2_duration, offset: s1_2_offset })
 	.setTween(s1_2_tween) // trigger a TweenMax.to tween
 	.addIndicators({name: "scene1_2"}) // add indicators (requires plugin)
 	.setPin("#scene") // pins the element for the the scene's duration
