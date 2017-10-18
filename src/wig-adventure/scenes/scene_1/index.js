@@ -108,7 +108,7 @@ var scene1_1 = new ScrollMagic.Scene({ offset: 2000 })
 	.addTo(controller)
 
 var s1_2_tween = s1_2(s1_Elements)
-var scene1_2 = new ScrollMagic.Scene({ duration: 200, offset: 2010 })
+var scene1_2 = new ScrollMagic.Scene({ duration: 1000, offset: 2020 })
 	.setTween(s1_2_tween) // trigger a TweenMax.to tween
 	.addIndicators({name: "scene1_2"}) // add indicators (requires plugin)
 	.setPin("#scene") // pins the element for the the scene's duration

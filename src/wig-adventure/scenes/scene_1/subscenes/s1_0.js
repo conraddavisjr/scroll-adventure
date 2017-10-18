@@ -66,13 +66,14 @@ var s1_0 = (elements) => {
 			fontSize: '7em',
 			top: '43px'
 		}, 
-		text: {value: `1%`}
+		text: {value: `0%`}
 	}, "+=0.5")
 
 	var tcd = 0.5 //text count duration
 	// count the text up to "65%""
 	s1_0.to(copyContainer, 1, {opacity: 1}, "+=0.7")
-	s1_0.to(copyContainer, tcd, {text: {value: `4%`}}, "+=0.7")
+	s1_0.to(copyContainer, tcd, {text: {value: `1%`}}, "+=0.7")
+	s1_0.to(copyContainer, tcd, {text: {value: `4%`}})
 	s1_0.to(copyContainer, tcd, {text: {value: `9%`}})
 	s1_0.to(copyContainer, tcd, {text: {value: `12%`}})
 	s1_0.to(copyContainer, tcd, {text: {value: `18%`}})
@@ -90,12 +91,11 @@ var s1_0 = (elements) => {
 	s1_0.to(copyContainer, tcd, {text: {value: `47%`}})
 	s1_0.to(copyContainer, tcd, {text: {value: `49%`}})
 	s1_0.to(copyContainer, tcd, {text: {value: `54%`}})
-	s1_0.to(copyContainer, tcd, {text: {value: `57%`}})
 	s1_0.to(copyContainer, tcd, {text: {value: `61%`}})
 	s1_0.to(copyContainer, tcd, {text: {value: `62%`}})
 	s1_0.to(copyContainer, tcd, {text: {value: `65%`}})
 	// slide the overlay up
-	s1_0.to(overlay, `${tcd * 22}`, {y: '-60%'}, `-=${tcd * 22}`)
+	s1_0.to(overlay, `${tcd * 23}`, {y: '-60%'}, `-=${tcd * 23}`)
 	s1_0.set(subCopyContainer, {
 		text: {value: `of women ages 10-65 <br> play games.`},
 		css:{
