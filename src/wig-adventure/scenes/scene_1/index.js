@@ -118,7 +118,7 @@ var scene1_1 = new ScrollMagic.Scene({ offset: s1_1_offset })
 	.addTo(controller)
 
 var s1_2_tween = s1_2(s1_Elements)
-var s1_2_duration = 1000;
+var s1_2_duration = 2000;
 var s1_2_offset = calculateOffset(20, s1_1_duration, s1_1_offset)
 var scene1_2 = new ScrollMagic.Scene({ duration: s1_2_duration, offset: s1_2_offset })
 	.setTween(s1_2_tween) // trigger a TweenMax.to tween
