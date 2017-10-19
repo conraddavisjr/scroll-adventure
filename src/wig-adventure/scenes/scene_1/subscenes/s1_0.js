@@ -18,7 +18,8 @@ var s1_0 = (elements) => {
     flickeringPhonesTl,
     rowOneLandscape_S1,
 		rowTwoLandscape_S1,
-		rowThreeLandscape_S1
+		rowThreeLandscape_S1,
+		s1_1_Tl
 	} = elements
 
 	// place scene Elements into an array to be passed to the movePlayer func
@@ -126,11 +127,12 @@ var s1_0 = (elements) => {
 	// make the player bounce
 	s1_0.call(() => playerIdleHover(false, elements), null, null, "+=1")
 	// make the player move through the scene
-	var distance = -490
-	s1_0.to(rowOneLandscape_S1, 25, { x: `${distance}` }), "-=25"
-	s1_0.to(rowTwoLandscape_S1, 25, { x: `${distance / 2}` }, "-=25")
-	s1_0.to(rowThreeLandscape_S1, 25, { x: `${distance / 4}` }, "-=25")
 	// movePlayer(s1_0, sceneElements, 'right', 490, 25);
+	movePlayer('s1', s1_0, sceneElements, -490, 25);
+	var distance = -490
+	// s1_0.to(rowOneLandscape_S1, 0.5, { x: `${distance}` }), "-=0.5"
+	// s1_0.to(rowTwoLandscape_S1, 0.5, { x: `${distance / 2}` }, "-=0.5")
+	// s1_0.to(rowThreeLandscape_S1, 0.5, { x: `${distance / 4}` }, "-=0.5")
 
 	return s1_0;
 

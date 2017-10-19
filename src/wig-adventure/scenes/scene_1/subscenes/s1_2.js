@@ -25,10 +25,11 @@ var s1_2 = (elements) => {
 
 	// make the player walk through the scene, up to the ledge
 	// movePlayer(s1_2, sceneElements, 'right', 825, 20);
-	var distance = -1655
-	s1_2.to(rowOneLandscape_S1, 7, { x: `${distance}` })
-	s1_2.to(rowTwoLandscape_S1, 7, { x: `${distance / 2}` }, "-=7")
-	s1_2.to(rowThreeLandscape_S1, 7, { x: `${distance / 4}` }, "-=7")
+	movePlayer('s1', s1_2, sceneElements, -1655, 7, 0);
+	// var distance = -1655
+	// s1_2.to(rowOneLandscape_S1, 7, { x: `${distance}` })
+	// s1_2.to(rowTwoLandscape_S1, 7, { x: `${distance / 2}` }, "-=7")
+	// s1_2.to(rowThreeLandscape_S1, 7, { x: `${distance / 4}` }, "-=7")
 	// make the player from bounce in reverse frame
 	s1_2.call(() => playerIdleHover(true, elements), null, null)
 	// stop the player from bouncing
@@ -41,23 +42,26 @@ var s1_2 = (elements) => {
 	s1_2.call(() => playerIdleHover(false, elements), null, null)
 	// make the player walk to the left
 	// movePlayer(s1_2, sceneElements, 'left', 280, 6);
-	distance = -1385
-	s1_2.to(rowOneLandscape_S1, 3, { x: `${distance}` }), "-=3"
-	s1_2.to(rowTwoLandscape_S1, 3, { x: `${distance / 2}` }, "-=3")
-	s1_2.to(rowThreeLandscape_S1, 3, { x: `${distance / 4}` }, "-=3")
+	movePlayer('s1', s1_2, sceneElements, -1385, 3);
+	// distance = -1385
+	// s1_2.to(rowOneLandscape_S1, 3, { x: `${distance}` }), "-=3"
+	// s1_2.to(rowTwoLandscape_S1, 3, { x: `${distance / 2}` }, "-=3")
+	// s1_2.to(rowThreeLandscape_S1, 3, { x: `${distance / 4}` }, "-=3")
 	// tilt the player body back to an upward walking position
-	s1_2.to(playerBody, 1, {transformOrigin: 'center center', rotation: '360cw', y: 0}, "-=6")
+	s1_2.to(playerBody, 1, {transformOrigin: 'center center', rotation: '360cw', y: 0}, "-=3")
 	// prolong the player's positiong
-	movePlayer(s1_2, sceneElements, 'left', 0, 5);
+	movePlayer('s1', s1_2, sceneElements, -1385, 3);
+	// movePlayer(s1_2, sceneElements, 'left', 0, 5);
 	// player runs and jumps over the cliff
 	// run
-	movePlayer(s1_2, sceneElements, 'right', 600, 5);
+	movePlayer('s1', s1_2, sceneElements, -1985, 3);
+	// movePlayer(s1_2, sceneElements, 'right', 600, 5);
 	// jump
-	s1_2.to(player, 1, { y: "-=200" }, "-=4")
+	s1_2.to(player, 1, { y: "-=200" }, "-=2.5")
 	// land
-	s1_2.to(player, 1, { y: "+=50" }, "-=1.5")
+	s1_2.to(player, 1, { y: "+=50" }, "-=1")
 	// tilt the player's head upward to look up
-	
+
 
 	return s1_2;
 	
