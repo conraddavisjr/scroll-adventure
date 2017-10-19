@@ -136,7 +136,7 @@ var scene1_1 = new ScrollMagic.Scene({ offset: s1_1_offset })
 		// console.log('this is the prev pageScrollPos: ', pageScrollPos);
 		// console.log('s1_1_Tl: ', s1_1_Tl)
 
-		if (event.scrollPos >= event.startPos && event.scrollPos <= event.startPos + 9) s1_1_Tl.play()
+		if (event.scrollPos >= event.startPos && event.scrollPos <= event.startPos + 9){ console.log('s1_1_Tl.play() TRIGGERED'); s1_1_Tl.play()}
 		
 	})
 	.addTo(controller)
