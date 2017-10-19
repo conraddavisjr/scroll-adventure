@@ -2,6 +2,7 @@
 // 
 
 import movePlayer from '../../../helpers/movePlayer';
+import toggleScroll from '../../../helpers/toggleScroll';
 
 var s1_0 = (elements) => {
 
@@ -13,7 +14,7 @@ var s1_0 = (elements) => {
 		phoneSpriteGroup,
 		staggerPhoneSprites,
 		overlay,
-		playerIdleHop,
+		playerIdleHover,
     flickeringPhonesTl,
     rowOneLandscape_S1,
 		rowTwoLandscape_S1,
@@ -36,7 +37,7 @@ var s1_0 = (elements) => {
 			opacity: 0, 
 			fontFamily: 'Roboto', 
 			textAlign: 'center', 
-			fontSize: '1.9em', 
+			fontSize: '1.9rem', 
 			fontWeight: 'bold',
 			color:"#DCDCF7", 
 			width: '100%',
@@ -52,6 +53,8 @@ var s1_0 = (elements) => {
 	// stagger the phone sprites into view and make them flicker
 	s1_0.set(phoneSpriteGroup, {opacity: 1})
 	s1_0.call(() => staggerPhoneSprites(elements))
+	// temporarily disable the scroll
+	s1_0.call(() => toggleScroll(1))
 	// fade out the copyContainer and the phone sprites
 	s1_0.to([copyContainer, phoneSpriteGroup], 20, {opacity: 0}, "+=42")
 	// make the phones flicker
@@ -63,7 +66,7 @@ var s1_0 = (elements) => {
 	// update copy styles
 	s1_0.set(copyContainer, { 
 		css:{ 
-			fontSize: '7em',
+			fontSize: '7rem',
 			top: '43px'
 		}, 
 		text: {value: `0%`}
@@ -119,11 +122,15 @@ var s1_0 = (elements) => {
 	// tilt the player body upward
 	s1_0.to(playerBody, 0.7, {transformOrigin: 'center center', rotation: '350cw', y: 0}, "-=1")
 	// stop the player from bouncing if reverse scrolling
-	s1_0.call(() => playerIdleHop(true, elements), null, null)
+	s1_0.call(() => playerIdleHover(true, elements), null, null)
 	// make the player bounce
-	s1_0.call(() => playerIdleHop(false, elements), null, null, "+=1")
+	s1_0.call(() => playerIdleHover(false, elements), null, null, "+=1")
 	// make the player move through the scene
-	movePlayer(s1_0, sceneElements, 'right', 490, 25);
+	var distance = -490
+	s1_0.to(rowOneLandscape_S1, 25, { x: `${distance}` }), "-=25"
+	s1_0.to(rowTwoLandscape_S1, 25, { x: `${distance / 2}` }, "-=25")
+	s1_0.to(rowThreeLandscape_S1, 25, { x: `${distance / 4}` }, "-=25")
+	// movePlayer(s1_0, sceneElements, 'right', 490, 25);
 
 	return s1_0;
 

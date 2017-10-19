@@ -1,6 +1,7 @@
 import svgMaster from './svg-assets';
 import staggerPhoneSprites from './composite-animations/staggerPhoneSprites';
 import flickeringPhones from './composite-animations/flickeringPhones';
+import playerIdleHover from './composite-animations/playerIdleHover';
 import playerIdleHop from './composite-animations/playerIdleHop';
 import toggleScroll from '../../helpers/toggleScroll';
 
@@ -25,6 +26,8 @@ masterScene.innerHTML += `
   </div>
 `
 
+// state Vars
+var pageScrollPos;
 
 // DOM elements
 var bodyTag = document.querySelector('body')
@@ -51,8 +54,13 @@ var phoneSpritesGlow = document.querySelectorAll('#phoneSprites_S1 [data-name="p
 
 // global timelines scoped to Scene ONE
 var flickeringPhonesTl = new TimelineMax()
+var playerIdleHoverTl = new TimelineMax()
 var playerIdleHopTl = new TimelineMax()
+// instantiate timeline for the subscenes
+var s1_1_Tl = new TimelineMax()
+
 var playerDefaultPosition = new TimelineMax()
+
 
 // set the default position for the player
 playerDefaultPosition.set(playerBody, { x: 40 })
@@ -82,9 +90,12 @@ var s1_Elements = {
 	staggerPhoneSprites,
 	overlay,
 	playerIdleHop,
+	playerIdleHover,
 	flickeringPhones,
 	flickeringPhonesTl,
-	playerIdleHopTl
+	playerIdleHopTl,
+	playerIdleHoverTl,
+	s1_1_Tl
 }
 
 
@@ -98,24 +109,39 @@ import s1_2 from './subscenes/s1_2';
 // init ScrollMagic controller
 var controller = new ScrollMagic.Controller();
 
-var s1_0_tween = s1_0(s1_Elements);
+var s1_0_tween = s1_0(s1_Elements, pageScrollPos);
 var s1_0_duration = 3000;
 var s1_0_offset = 0;
 var scene1_0 = new ScrollMagic.Scene({ duration: s1_0_duration, offset: s1_0_offset })
   .setTween(s1_0_tween) // trigger a TweenMax.to tween
-  // .addIndicators({name: "s1_0"}) // add indicators (requires plugin)
+  .addIndicators({name: "s1_0"}) // add indicators (requires plugin)
   .setPin("#scene") // pins the element for the the scene's duration
   .addTo(controller)
 
 var s1_1_tween = s1_1(s1_Elements);
 var s1_1_duration = 0;
-var s1_1_offset = calculateOffset(0, s1_0_duration, s1_0_offset);
+var s1_1_offset = calculateOffset(40, s1_0_duration, s1_0_offset);
 var scene1_1 = new ScrollMagic.Scene({ offset: s1_1_offset })
 	.setTween(s1_1_tween) // trigger a TweenMax.to tween
 	.addIndicators({name: "scene1_1"}) // add indicators (requires plugin)
 	// .setPin("#scene") // pins the element for the the scene's duration
-	.on('start', () => toggleScroll(s1_1_tween.duration()))
+	.on('start', (event) => {
+		console.log('start Event: ', event)
+		toggleScroll(s1_1_tween.duration())
+		// console.warn('start CALLED- progress: ', event.progress)
+	})
+	.on('enter leave', (event) => console.warn(event.type))
+	.on('update', (event) => {
+		// console.warn('startPos: ', event.startPos, 'endPos: ', event.endPos, 'scrollPos: ', event.scrollPos)
+		// console.log('this is the prev pageScrollPos: ', pageScrollPos);
+		// console.log('s1_1_Tl: ', s1_1_Tl)
+
+		if (event.scrollPos >= event.startPos && event.scrollPos <= event.startPos + 9) s1_1_Tl.play()
+		
+	})
 	.addTo(controller)
+
+console.warn(scene1_1.state())
 
 var s1_2_tween = s1_2(s1_Elements)
 var s1_2_duration = 2000;
