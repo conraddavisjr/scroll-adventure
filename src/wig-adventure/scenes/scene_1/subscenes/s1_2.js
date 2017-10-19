@@ -23,12 +23,12 @@ var s1_2 = (elements) => {
 		rowThreeLandscape_S1
 	]
 
-	// make the player walk throught the scene, up to the ledge
+	// make the player walk through the scene, up to the ledge
 	// movePlayer(s1_2, sceneElements, 'right', 825, 20);
 	var distance = -1655
-	s1_2.to(rowOneLandscape_S1, 5, { x: `${distance}` }), "-=5"
-	s1_2.to(rowTwoLandscape_S1, 5, { x: `${distance / 2}` }, "-=5")
-	s1_2.to(rowThreeLandscape_S1, 5, { x: `${distance / 4}` }, "-=5")
+	s1_2.to(rowOneLandscape_S1, 7, { x: `${distance}` })
+	s1_2.to(rowTwoLandscape_S1, 7, { x: `${distance / 2}` }, "-=7")
+	s1_2.to(rowThreeLandscape_S1, 7, { x: `${distance / 4}` }, "-=7")
 	// make the player from bounce in reverse frame
 	s1_2.call(() => playerIdleHover(true, elements), null, null)
 	// stop the player from bouncing

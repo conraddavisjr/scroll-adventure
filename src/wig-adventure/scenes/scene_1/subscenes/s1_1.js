@@ -2,7 +2,7 @@
 
 import movePlayer from '../../../helpers/movePlayer';
 
-var s1_1 = (elements, pageScrollPos) => {
+var s1_1 = (elements) => {
 
 	console.log('s1_1 CALLED')
 
@@ -16,7 +16,6 @@ var s1_1 = (elements, pageScrollPos) => {
 		s1_1_Tl
 	} = elements
 
-	console.log('pageScrollPos on the S1.1 LEVEL: ', pageScrollPos)
 	s1_1_Tl.pause()
 
 	// place scene Elements into an array to be passed to the movePlayer func

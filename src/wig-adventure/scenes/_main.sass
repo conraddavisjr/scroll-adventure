@@ -1,0 +1,51 @@
+body
+  margin: 0
+  overflow-x: hidden
+  background-color: black
+  &.disabledScroll
+    overflow: hidden
+
+#scene
+  position: relative
+  height: 100vh
+  background-color: #DDF3FD
+
+#camera
+  display: initial
+
+.overlay
+  position: fixed
+  width: 100%
+  height: 100%
+  background-color: black
+  opacity: 0.9
+  top: 0
+  z-index: 4
+
+.copy-container,
+.sub-copy-container
+  position: absolute
+  top: 10px
+  z-index: 4
+
+#player-body
+  position: absolute
+  width: 74px
+  height: 74px
+  bottom: 0
+  z-index: 4
+
+.player-shadow
+  fill:#02121a
+  opacity: 0.4
+
+.overlay
+  position: fixed
+  height: 100%
+  width: 100%
+  background-color: rgba(0, 0, 0, 0.7)
+
+.environment
+  min-width: 1280px
+  position: relative
+  height: 100%
