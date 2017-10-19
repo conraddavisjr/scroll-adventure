@@ -28,6 +28,8 @@ masterScene.innerHTML += `
 
 // state Vars
 var pageScrollPos;
+// instantiate walkdistances for the scenes
+window.s1_walkDistance = 10;
 
 // DOM elements
 var bodyTag = document.querySelector('body')

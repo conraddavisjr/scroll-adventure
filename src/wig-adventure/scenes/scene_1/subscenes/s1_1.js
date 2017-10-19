@@ -6,6 +6,11 @@ var s1_1 = (elements) => {
 
 	console.log('s1_1 CALLED')
 
+
+	var s1_walkDistance = window.s1_walkDistance
+	console.log('s1_walkDistance: ', s1_walkDistance)
+
+
 	// destructure the neccessary elements
 	const {
 		playerIdleHover,
@@ -31,7 +36,7 @@ var s1_1 = (elements) => {
 	// simulate a double jump onto then off of the rock
 	// 1st jump
 	// movePlayer(s1_1_Tl, sceneElements, 'right', 150, 0.5);
-	var distance = -645
+	s1_walkDistance = -645
 	var timing = 0.5
 	// s1_1_Tl.set(player, { x: 40, y: 0 })
 	s1_1_Tl.to(rowOneLandscape_S1, timing, { x: `${distance}` }, "-=0.5")

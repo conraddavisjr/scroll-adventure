@@ -56,6 +56,9 @@ var s1_2 = (elements) => {
 	s1_2.to(player, 1, { y: "-=200" }, "-=4")
 	// land
 	s1_2.to(player, 1, { y: "+=50" }, "-=1.5")
+	// tilt the player's head upward to look up
+	
+
 	return s1_2;
 	
 }
